@@ -1,4 +1,4 @@
-const pkg = require('./package')
+const pkg = require('./package');
 
 module.exports = {
   mode: 'spa',
@@ -11,11 +11,11 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { hid: 'description', name: 'description', content: pkg.description },
     ],
     link: [
       { rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' },
-    ]
+    ],
   },
 
   /*
@@ -28,7 +28,7 @@ module.exports = {
       login: '/login',
       logout: '/',
       callback: '/login',
-      home: '/'
+      home: '/',
     },
     strategies: {
       local: {
@@ -52,7 +52,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    { src: '~assets/css/main.scss', lang: 'scss' }
+    { src: '~assets/css/main.scss', lang: 'scss' },
   ],
 
   /*
