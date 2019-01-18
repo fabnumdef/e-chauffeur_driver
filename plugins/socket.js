@@ -1,16 +1,19 @@
 import Vue from 'vue';
-import VueSocketIO from 'vue-socket.io';
+import VueSocketio from 'vue-socket.io-extended';
+import io from 'socket.io-client';
 
-export default function (ctx, inject) {
-  const socket = new VueSocketIO({
-    debug: true,
-    connection: ctx.env.apiUrl,
-    vuex: {
-      store: ctx.store,
-      actionPrefix: 'socket/',
-      mutationPrefix: 'socket/',
-    },
-  });
-  Vue.use(socket);
-  inject('io', socket.io);
+
+export default function ({ env, store, app }, inject) {
+  const ioInstance = io(env.apiUrl, { autoConnect: false });
+  Vue.use(VueSocketio, ioInstance, { store });
+  inject('io', ioInstance);
+  const autoConnect = (isLogged) => {
+    if (isLogged) {
+      ioInstance.open();
+    } else {
+      ioInstance.close();
+    }
+  };
+  autoConnect(app.$auth.loggedIn);
+  app.$auth.$storage.watchState('loggedIn', autoConnect);
 }

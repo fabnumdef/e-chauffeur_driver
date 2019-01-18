@@ -38,6 +38,10 @@ module.exports = {
         },
       },
     },
+    plugins: [
+      '~/plugins/geolocation.js',
+      '~/plugins/socket.js',
+    ],
   },
 
   router: {
@@ -59,8 +63,9 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/socket.js',
-    '~/plugins/geolocation.js',
+    '~/api',
+    '~/plugins/axios.js',
+    '~/plugins/states.js',
   ],
 
   /*
