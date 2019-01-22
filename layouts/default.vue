@@ -1,7 +1,5 @@
 <template>
-  <div class="columns">
-    <nuxt class="column" />
-  </div>
+  <nuxt />
 </template>
 <script>
 export default {

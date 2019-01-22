@@ -1,47 +1,51 @@
 <template>
-  <div>
-    <main class="container content">
-      <h1>Me connecter</h1>
-      <hr >
-      <form @submit.prevent="login(user)">
-        <div class="field">
-          <label class="label">Mon email</label>
-          <div class="control">
-            <input
-              v-model="user.email"
-              required="required"
-              class="input"
-              type="email"
-              placeholder="Email"
-              autofocus="autofocus" >
-          </div>
-        </div>
+  <main class="container">
+    <div class="logo">
+      <img alt="E-chauffeur" src="/logo.svg" />
+    </div>
+    <form @submit.prevent="login(user)">
+      <ec-field label="Email" field-id="email" :icon-left="['fas', 'user']">
+        <input
+          v-model="user.email"
+          id="email"
+          required="required"
+          class="input"
+          type="email"
+          placeholder="john@doe.com"
+          autofocus="autofocus"
+        >
+      </ec-field>
 
-        <div class="field">
-          <label class="label">Votre code secret</label>
-          <div class="control">
-            <input
-              v-model="user.password"
-              required="required"
-              class="input"
-              type="password"
-              placeholder="Tous les caractères sont acceptés" >
-          </div>
+      <ec-field label="Mot de passe" field-id="password" :icon-left="['fas', 'key']">
+        <input
+          v-model="user.password"
+          required="required"
+          class="input"
+          type="password"
+          id="password"
+        >
+      </ec-field>
+
+      <div class="field login is-grouped">
+        <div class="control">
+          <button class="button">
+            Me connecter
+          </button>
         </div>
-        <div class="field is-grouped">
-          <div class="control">
-            <button class="button is-primary">Me connecter</button>
-          </div>
-        </div>
-      </form>
-    </main>
-  </div>
+      </div>
+    </form>
+  </main>
 </template>
 
 <script>
 const DEFAULT_REDIRECT = '/rides';
+import ecField from '~/components/form/field';
 
 export default {
+  layout: 'not-logged',
+  components: {
+    ecField
+  },
   async asyncData({ query: { redirect } }) {
     return {
       redirectTo: redirect || DEFAULT_REDIRECT,
@@ -61,3 +65,26 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+  @import "~assets/css/head";
+  .logo {
+    padding: 50px;
+    text-align: center;
+    display: block;
+  }
+  .field.login {
+    margin-top: 32px;
+    .control {
+      width: 100%;
+    }
+    .button {
+      max-width: 500px;
+      display: block;
+      padding: 10px 20px;
+      height: auto;
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
+</style>

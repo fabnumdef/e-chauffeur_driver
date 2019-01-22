@@ -7,6 +7,7 @@ $blue-dark: #003b80;
 
 $white: hsl(0, 0%, 100%);
 $white-20: rgba($white, 0.2);
+$white-gray: #f6f8fa;
 $black: #1c1c1c;
 $gray: hsl(0, 0%, 90%);
 $light-gray: hsl(0, 0%, 94%);
@@ -15,12 +16,12 @@ $dark-gray: hsl(0, 0%, 65%);
 /*************
  *   Bulma   *
  *************/
-$text: $white;
-$text-strong: $white;
-$background: $blue-light;
+$text: $black;
+$text-strong: $text;
+$background: $white-gray;
 $primary: $blue-medium;
 $family-sans-serif: 'Source Sans Pro', sans-serif;
-$link: $white;
+$link: $text;
 $link-hover: darken($white, 15%);
 $title-color: $text;
 $menu-item-radius: 0;
@@ -34,6 +35,13 @@ $input-color: $text;
 $input-hover-color: $text;
 $input-icon-color: $text;
 $input-icon-active-color: $text;
+$input-shadow: none;
+$input-focus-box-shadow-size: 0;
+
+// Buttons
+$button-color: $primary;
+$button-focus-color: $primary;
+$button-hover-color: $primary;
 
 // Tabs
 $tabs-link-hover-color: $black;
