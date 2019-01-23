@@ -57,6 +57,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    'swiper/dist/css/swiper.css',
     { src: '~assets/css/main.scss', lang: 'scss' },
   ],
 
@@ -67,6 +68,7 @@ module.exports = {
     '~/api',
     '~/plugins/axios.js',
     '~/plugins/states.js',
+    { src: '~/plugins/swiper.js', ssr: false },
   ],
 
   /*

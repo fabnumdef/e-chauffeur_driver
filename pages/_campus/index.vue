@@ -1,26 +1,29 @@
 <template>
   <section>
-    <ul>
-      <li
-        v-for="ride in rides"
-        :key="ride.id"
-      >
-        {{ ride.id }}
-        {{ ride.status }}
-        <button
-          v-if="stateCanChange(ride.status, 'accept')"
-          @click="changeStatus(ride, 'accept')"
+    <div v-swiper:ridesSwipe="{}">
+      <div class="swiper-wrapper">
+        <div class="swiper-pagination swiper-pagination-bullets"></div>
+        <div
+          v-for="ride in rides"
+          :key="ride.id" class="swiper-slide"
         >
-          accept
-        </button>
-        <!--<button
-        type="button"
-        v-for="action in Object.values(actions)"
-        :key="action"
-        v-if="ride.status && ride.status.can(action)"
-        @click="changeStatus(ride, action)">{{action}}</button>-->
-      </li>
-    </ul>
+          {{ ride.id }}
+          {{ ride.status }}
+          <button
+            v-if="stateCanChange(ride.status, 'accept')"
+            @click="changeStatus(ride, 'accept')"
+          >
+            accept
+          </button>
+          <!--<button
+          type="button"
+          v-for="action in Object.values(actions)"
+          :key="action"
+          v-if="ride.status && ride.status.can(action)"
+          @click="changeStatus(ride, action)">{{action}}</button>-->
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 <script>
