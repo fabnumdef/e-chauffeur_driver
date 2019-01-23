@@ -41,7 +41,7 @@ export default {
     }),
   },
   methods: {
-    changeStatus(ride, status) {
+    async changeStatus(ride, status) {
       return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride.id, status);
     },
   },

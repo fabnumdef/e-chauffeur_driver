@@ -1,13 +1,20 @@
 <template>
   <main class="container">
     <div class="logo">
-      <img alt="E-chauffeur" src="/logo.svg" />
+      <img
+        alt="E-chauffeur"
+        src="/logo.svg"
+      >
     </div>
     <form @submit.prevent="login(user)">
-      <ec-field label="Email" field-id="email" :icon-left="['fas', 'user']">
+      <ec-field
+        label="Email"
+        field-id="email"
+        :icon-left="['fas', 'user']"
+      >
         <input
-          v-model="user.email"
           id="email"
+          v-model="user.email"
           required="required"
           class="input"
           type="email"
@@ -16,13 +23,17 @@
         >
       </ec-field>
 
-      <ec-field label="Mot de passe" field-id="password" :icon-left="['fas', 'key']">
+      <ec-field
+        label="Mot de passe"
+        field-id="password"
+        :icon-left="['fas', 'key']"
+      >
         <input
+          id="password"
           v-model="user.password"
           required="required"
           class="input"
           type="password"
-          id="password"
         >
       </ec-field>
 
@@ -43,7 +54,7 @@ import ecField from '~/components/form/field';
 export default {
   layout: 'not-logged',
   components: {
-    ecField
+    ecField,
   },
   async asyncData() {
     return {

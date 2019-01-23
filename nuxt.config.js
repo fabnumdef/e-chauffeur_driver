@@ -95,4 +95,9 @@ module.exports = {
       },
     ],
   },
+
+  toast: {
+    position: 'bottom-right',
+    duration: 15000,
+  },
 };
