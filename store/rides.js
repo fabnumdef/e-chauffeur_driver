@@ -5,34 +5,34 @@ import { states } from '~/api/status';
 const statesToTrack = [states.CREATED, states.ACCEPTED, states.IN_PROGRESS, states.WAITING];
 
 export const state = () => ({
-  rides: null,
+  rides: [],
 });
 
 export const mutations = {
   setRides: (s, rides = null) => {
-    s.rides = rides.reduce((acc, curr) => {
-      const { id } = curr;
-      if (!id) {
-        throw new Error('Id is required');
-      }
-      acc[id] = curr;
-      return acc;
-    }, {});
+    s.rides = rides
+      .filter(({ id }) => !!id);
   },
   pushRide: (s, ride) => {
-    const { id } = ride;
-    if (!id) {
+    if (!ride.id) {
       throw new Error('Id is required');
     }
-    if (!s.rides) {
-      s.rides = {};
+    const i = s.rides.findIndex(({ id }) => id === ride.id);
+    const isToTrack = statesToTrack.includes(ride.status);
+    if (i === -1) {
+      if (isToTrack) {
+        s.rides.push(ride);
+      }
+    } else if (isToTrack) {
+      Object.assign(s.rides[i], ride);
+    } else {
+      s.rides.splice(i, 1);
     }
-    s.rides[id] = ride;
   },
 };
 
 export const getters = {
-  rides: s => Object.values(s.rides).filter(r => statesToTrack.includes(r.status)),
+  rides: s => s.rides,
 };
 
 export const actions = {
