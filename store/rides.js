@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import { states } from '~/api/status';
 
-const statesToTrack = [states.CREATED, states.ACCEPTED, states.IN_PROGRESS, states.WAITING];
+const statesToTrack = [states.VALIDATED, states.STARTED, states.ACCEPTED, states.IN_PROGRESS, states.WAITING];
 
 export const state = () => ({
   rides: [],
@@ -32,7 +32,8 @@ export const mutations = {
 };
 
 export const getters = {
-  rides: s => s.rides,
+  ridesToDo: s => s.rides.filter(({ status }) => status !== states.VALIDATED),
+  ridesToAccept: s => s.rides.filter(({ status }) => status === states.VALIDATED),
 };
 
 export const actions = {
@@ -41,7 +42,7 @@ export const actions = {
       const { data } = await this.$api.rides(
         campus,
         this.$auth.user.id,
-        'id,start,end,phone,departure,arrival,passengersCount,car(id,label),status',
+        'id,start,end,phone,departure,arrival,passengersCount,car(id,label,model(label)),status',
       ).getRides(...statesToTrack);
       commit('setRides', data);
     } catch (e) {
