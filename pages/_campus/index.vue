@@ -1,8 +1,13 @@
 <template>
   <section>
-    <h1 class="title container">
-      Courses
-    </h1>
+    <header class="container">
+      <p class="pretitle">
+        {{'now'|format_date('full')}}
+      </p>
+      <h1 class="title">
+        Courses
+      </h1>
+    </header>
     <div
       v-if="rides.length < 1"
       class="no-rides container"
@@ -22,8 +27,9 @@
         >
           <div class="notification is-primary">
             <div class="container">
-              {{ ride.departure.label }}
-              <ride-status :status="ride.status" />
+              <ride-status :status="ride.status" class="is-pulled-right" />
+              <p class="poi-label">Prochaine destination</p>
+              <p class="poi">{{ ride.departure.label }}</p>
               <status-change :status="ride.status" no-cancel @change="changeStatus(ride, $event)"/>
             </div>
           </div>
@@ -69,20 +75,41 @@ export default {
   },
 };
 </script>
+
 <style scoped lang="scss">
   @import "~assets/css/head";
   .notification {
     z-index: 1;
     box-shadow: 0 10px 20px 0 rgba($black, 0.15);
   }
+
   /deep/ > .box {
     $underNotifCorrection: 40px;
     margin-top: -$underNotifCorrection;
     padding-top: $underNotifCorrection;
     margin-bottom: $underNotifCorrection;
   }
+
+  header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    .pretitle {
+      text-transform: uppercase;
+      color: $dark-gray;
+      font-weight: bold;
+    }
+  }
+
   .no-rides {
     padding: 15px;
     font-size: $size-4;
+  }
+
+  .poi {
+    font-size: $size-1;
+    font-weight: bold;
+    &-label {
+      font-size: $size-7;
+    }
   }
 </style>

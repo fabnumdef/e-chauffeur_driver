@@ -96,7 +96,8 @@
     margin-top: $size-5;
     width: 34px;
     height: 34px;
-    border-radius: 25px;
+    padding: 0;
+    border-radius: 100%;
     box-shadow: 1px 2px 1px 0 rgba($black, 0.15);
   }
 </style>

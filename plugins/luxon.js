@@ -8,4 +8,10 @@ export default () => {
     }
     return value;
   });
+  Vue.filter('format_date', (value, format = 'full') => {
+    if (value === 'now') {
+      return DateTime.local().toLocaleString(DateTime[`date_${format}`.toUpperCase()]);
+    }
+    return value;
+  })
 };
