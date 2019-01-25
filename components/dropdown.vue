@@ -37,8 +37,8 @@
 export default {
   props: {
     options: {
-      type: Array,
-      default: () => [],
+      type: Object,
+      default: () => ({}),
     },
   },
   data: () => ({ open: false }),
