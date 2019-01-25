@@ -69,6 +69,7 @@ module.exports = {
     '~/plugins/axios.js',
     '~/plugins/states.js',
     { src: '~/plugins/swiper.js', ssr: false },
+    '~/plugins/luxon.js',
   ],
 
   /*
