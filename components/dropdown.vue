@@ -1,16 +1,32 @@
 <template>
-  <div class="dropdown is-up" :class="{ 'is-active': open }">
+  <div
+    class="dropdown is-up"
+    :class="{ 'is-active': open }"
+  >
     <div class="dropdown-trigger">
-      <button class="button" aria-haspopup="true" aria-controls="dropdown-menu" @click="open = !open">
+      <button
+        class="button"
+        aria-haspopup="true"
+        aria-controls="dropdown-menu"
+        @click="open = !open"
+      >
         <span><slot /></span>
         <span class="icon is-small">
           <fa-icon :icon="['fas', 'angle-down']" />
-      </span>
+        </span>
       </button>
     </div>
-    <div class="dropdown-menu" role="menu">
+    <div
+      class="dropdown-menu"
+      role="menu"
+    >
       <div class="dropdown-content">
-        <button class="dropdown-item" @click="propagate(id)" v-for="(option, id) in options">
+        <button
+          v-for="(option, id) in options"
+          :key="id"
+          class="dropdown-item"
+          @click="propagate(id)"
+        >
           {{ option }}
         </button>
       </div>
@@ -18,21 +34,20 @@
   </div>
 </template>
 <script>
-  export default {
-    props: {
-      options: {
-        type: Array,
-        default: () => [],
-      }
+export default {
+  props: {
+    options: {
+      type: Array,
+      default: () => [],
     },
-    data: () => ({ open: false }),
-    methods: {
-      propagate(id) {
-        console.log(id);
-        this.$emit('click', id)
-      },
+  },
+  data: () => ({ open: false }),
+  methods: {
+    propagate(id) {
+      this.$emit('click', id);
     },
-  };
+  },
+};
 </script>
 <style scoped lang="scss">
   @import "~assets/css/head";

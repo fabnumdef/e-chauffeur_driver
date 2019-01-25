@@ -17,10 +17,23 @@ export const DELIVERED = 'delivered';
 export const DONE = 'done';
 export const CANCELED = 'canceled';
 
-export const isDeclined = (status) => status.startsWith(DECLINED);
+export const isDeclined = status => status.startsWith(DECLINED);
 
 export const states = {
-  CREATED, VALIDATED, REJECTED_BOUNDARY, REJECTED_CAPACITY, ACCEPTED, DECLINED_DAMAGE, DECLINED_TRAFFIC, DECLINED_NOBODY, STARTED, WAITING, IN_PROGRESS, DELIVERED, DONE, CANCELED,
+  CREATED,
+  VALIDATED,
+  REJECTED_BOUNDARY,
+  REJECTED_CAPACITY,
+  ACCEPTED,
+  DECLINED_DAMAGE,
+  DECLINED_TRAFFIC,
+  DECLINED_NOBODY,
+  STARTED,
+  WAITING,
+  IN_PROGRESS,
+  DELIVERED,
+  DONE,
+  CANCELED,
 };
 
 const DECLINE = 'decline';
@@ -38,7 +51,7 @@ export const DELIVER = 'deliver';
 export const FINISH = 'finish';
 export const CANCEL = 'void';
 
-export const isDecline = (status) => status.startsWith(DECLINE);
+export const isDecline = status => status.startsWith(DECLINE);
 
 export const actions = {
   VALIDATE,
