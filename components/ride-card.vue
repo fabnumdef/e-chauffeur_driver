@@ -26,7 +26,7 @@
     <a
       v-if="ride.phone"
       :href="`tel:${ride.phone}`"
-      class="push-right"
+      class="button is-rounded is-pulled-right phone-button"
     >
       <fa-icon :icon="['fas', 'phone']" />
     </a>
@@ -83,10 +83,20 @@
     border-color: $text;
     box-sizing: border-box;
   }
+
   .list-info {
     padding: $size-5 0;
   }
+
   .subtitle {
     font-weight: bold;
+  }
+
+  .phone-button {
+    margin-top: $size-5;
+    width: 34px;
+    height: 34px;
+    border-radius: 25px;
+    box-shadow: 1px 2px 1px 0 rgba($black, 0.15);
   }
 </style>
