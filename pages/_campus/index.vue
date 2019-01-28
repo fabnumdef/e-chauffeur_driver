@@ -25,7 +25,7 @@
           :key="ride.id"
           class="swiper-slide"
         >
-          <div class="notification is-primary">
+          <div class="notification" :class="getColorClass(ride.status)">
             <div class="container">
               <ride-status :status="ride.status" class="is-pulled-right" />
               <p class="poi-label">Prochaine destination</p>
@@ -43,7 +43,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { actions } from '~/api/status';
+import { actions, states } from '~/api/status';
 import rideStatus from '~/components/ride-status-badge.vue';
 import rideCard from '~/components/ride-card.vue';
 import statusChange from '~/components/ride-status-change.vue';
@@ -72,6 +72,18 @@ export default {
     async changeStatus(ride, status) {
       return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride.id, status);
     },
+    getColorClass(status) {
+      switch (status) {
+        case states.ACCEPTED:
+          return 'is-gray';
+        case states.STARTED:
+        case states.WAITING:
+          return 'is-warning';
+        case states.IN_PROGRESS:
+        case states.DELIVERED:
+          return 'is-primary';
+      }
+    }
   },
 };
 </script>
@@ -81,6 +93,22 @@ export default {
   .notification {
     z-index: 1;
     box-shadow: 0 10px 20px 0 rgba($black, 0.15);
+    color: $white;
+    /deep/ .tag {
+      font-weight: bold;
+    }
+    &.is-gray {
+      background-color: $gray;
+      /deep/ .tag {
+        color: $gray;
+      }
+    }
+    &.is-primary /deep/ .tag {
+      color: $primary;
+    }
+    &.is-warning /deep/ .tag {
+      color: $warning;
+    }
   }
 
   /deep/ > .box {
