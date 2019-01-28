@@ -23,10 +23,11 @@ export default function ({ app, store }) {
   };
   autoGeoloc(app.$auth.loggedIn);
   app.$auth.$storage.watchState('loggedIn', autoGeoloc);
-  store.watch((state, getters) => getters[`${MODULE}/getPosition`], (position) => {
-    if (app.$auth.loggedIn && store.getters[`${MODULE}/hasPosition`]) {
+  store.watch((state, getters) => getters['context/campus'] && getters[`${MODULE}/getPosition`], (position) => {
+    if (app.$auth.loggedIn && store.getters[`${MODULE}/hasPosition`] && store.getters['context/campus']) {
       app.$io.emit('positionUpdate', {
         user: app.$auth.user,
+        campus: store.getters['context/campus'],
         position,
       });
     }
