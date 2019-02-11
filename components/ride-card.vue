@@ -1,8 +1,5 @@
 <template>
   <div class="box">
-    <h2 class="subtitle">
-      Course #{{ ride.id }}
-    </h2>
     <ec-field
       label="Départ"
       :icon-left="['fas', 'map-marker-alt']"
@@ -23,16 +20,22 @@
         class="input"
       >
     </ec-field>
-    <a
-      v-if="ride.phone"
-      :href="`tel:${ride.phone}`"
-      class="button is-rounded is-pulled-right phone-button"
-    >
-      <fa-icon :icon="['fas', 'phone']" />
-    </a>
+    <div v-if="ride.comments" class="comments">
+      <fa-icon :icon="['fas', 'headset']" />
+      <p>{{ride.comments}}</p>
+    </div>
     <ul class="list-info">
       <li>Nombre de passagers : <strong>{{ ride.passengersCount }}</strong></li>
       <li>Heure de prise en charge : <strong>{{ ride.start|format_time('24_simple') }}</strong></li>
+      <li>Tel. portable passager : <strong>{{ ride.phone ? 'Oui' : 'Non' }}</strong>
+        <a
+          v-if="ride.phone"
+          :href="`tel:${ride.phone}`"
+          class="button is-pulled-right phone-button"
+        >
+          Appeler
+        </a>
+      </li>
       <li v-if="ride.car">
         <strong v-if="ride.car.model">
           {{ ride.car.model.label }}
@@ -91,13 +94,23 @@
   .subtitle {
     font-weight: bold;
   }
-
-  .phone-button {
-    margin-top: $size-5;
-    width: 34px;
-    height: 34px;
-    padding: 0;
-    border-radius: 100%;
-    box-shadow: 1px 2px 1px 0 rgba($black, 0.15);
+  .comments {
+    display: flex;
+    /deep/ .fa-headset {
+      background: $primary;
+      color: findColorInvert($primary);
+      box-sizing: content-box;
+      border-radius: 100%;
+      padding: 4px;
+      font-size: 9px;
+      margin-top: auto;
+      margin-right: $size-small;
+    }
+    > p {
+      background: $light-gray;
+      padding: $size-small;
+      border-radius: $size-small $size-small $size-small 0;
+      box-sizing: content-box;
+    }
   }
 </style>

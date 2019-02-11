@@ -42,7 +42,7 @@ export const actions = {
       const { data } = await this.$api.rides(
         campus,
         this.$auth.user.id,
-        'id,start,end,phone,departure,arrival,passengersCount,car(id,label,model(label)),status',
+        'id,start,end,phone,departure(label),arrival(label),passengersCount,car(id,label,model(label)),status,comments',
       ).getRides(...statesToTrack);
       commit('setRides', data);
     } catch (e) {
