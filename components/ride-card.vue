@@ -20,14 +20,18 @@
         class="input"
       >
     </ec-field>
-    <div v-if="ride.comments" class="comments">
+    <div
+      v-if="ride.comments"
+      class="comments"
+    >
       <fa-icon :icon="['fas', 'headset']" />
-      <p>{{ride.comments}}</p>
+      <p>{{ ride.comments }}</p>
     </div>
     <ul class="list-info">
       <li>Nombre de passagers : <strong>{{ ride.passengersCount }}</strong></li>
       <li>Heure de prise en charge : <strong>{{ ride.start|format_time('24_simple') }}</strong></li>
-      <li>Tel. portable passager : <strong>{{ ride.phone ? 'Oui' : 'Non' }}</strong>
+      <li>
+        Tel. portable passager : <strong>{{ ride.phone ? 'Oui' : 'Non' }}</strong>
         <a
           v-if="ride.phone"
           :href="`tel:${ride.phone}`"
@@ -46,37 +50,37 @@
       class="status-change"
       :status="ride.status"
       fullwidth
-      @change="updateRide(ride, $event)"
       :cancel-only="cancelOnly"
+      @change="updateRide(ride, $event)"
     />
   </div>
 </template>
 <script>
-  import ecField from '~/components/form/field.vue';
-  import statusChange from '~/components/ride-status-change.vue';
+import ecField from '~/components/form/field.vue';
+import statusChange from '~/components/ride-status-change.vue';
 
-  export default {
-    components: {
-      ecField,
-      statusChange,
+export default {
+  components: {
+    ecField,
+    statusChange,
 
+  },
+  props: {
+    ride: {
+      type: Object,
+      required: true,
     },
-    props: {
-      ride: {
-        type: Object,
-        required: true,
-      },
-      cancelOnly: {
-        type: Boolean,
-        default: false,
-      }
+    cancelOnly: {
+      type: Boolean,
+      default: false,
     },
-    methods: {
-      updateRide(ride, transition) {
-        return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride.id, transition);
-      },
+  },
+  methods: {
+    updateRide(ride, transition) {
+      return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride.id, transition);
     },
-  };
+  },
+};
 </script>
 <style scoped lang="scss">
   @import "~assets/css/head";
