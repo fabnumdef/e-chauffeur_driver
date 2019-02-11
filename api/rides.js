@@ -36,7 +36,7 @@ export default axios => (campus, user, mask) => {
 
     async mutateRide(id, action) {
       return axios.post(
-        `/${ENTITY_PLURAL}/${id}/${action}`,
+        `/${ENTITY_PLURAL}/${encodeURIComponent(id)}/${action}`,
         {},
         {
           params,
