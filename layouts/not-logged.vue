@@ -16,8 +16,6 @@ export default {
     padding: 50px;
     .label {
       color: $white;
-      font-weight: normal;
-      text-align: left;
       margin-left: 36px;
     }
     .control.has-icons- {
@@ -29,9 +27,6 @@ export default {
           color: $white;
         }
       }
-    }
-    .control {
-      margin-top: 0;
     }
     .input, .textarea {
       border-color: $white;

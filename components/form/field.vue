@@ -1,25 +1,39 @@
 <template>
   <div
-    class="field">
+    class="field"
+  >
     <div
       v-if="label"
-      class="field-label is-normal">
+      class="field-label is-normal"
+    >
       <label
         :for="fieldId"
-        class="label">{{ label }}</label>
+        class="label"
+      >
+        {{ label }}
+      </label>
     </div>
     <div class="field-body">
       <div class="field">
-        <div class="control" :class="{
-          'has-icons-left': !!iconLeft,
-          'has-icons-right': !!iconRight,
-        }">
+        <div
+          class="control"
+          :class="{
+            'has-icons-left': !!iconLeft,
+            'has-icons-right': !!iconRight,
+          }"
+        >
           <slot />
-          <span class="icon is-small is-left" v-if="!!iconLeft">
-            <fa-icon :icon="iconLeft"/>
+          <span
+            v-if="!!iconLeft"
+            class="icon is-small is-left"
+          >
+            <fa-icon :icon="iconLeft" />
           </span>
-          <span class="icon is-small is-right" v-if="!!iconRight">
-            <fa-icon :icon="iconRight"/>
+          <span
+            v-if="!!iconRight"
+            class="icon is-small is-right"
+          >
+            <fa-icon :icon="iconRight" />
           </span>
         </div>
       </div>
