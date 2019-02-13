@@ -42,6 +42,7 @@ module.exports = {
       '~/plugins/geolocation.js',
       '~/plugins/socket.js',
     ],
+    scopeKey: pkg.name,
   },
 
   router: {

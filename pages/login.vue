@@ -38,7 +38,6 @@
 </template>
 
 <script>
-const DEFAULT_REDIRECT = '/rides';
 import ecField from '~/components/form/field';
 
 export default {
@@ -46,20 +45,18 @@ export default {
   components: {
     ecField
   },
-  async asyncData({ query: { redirect } }) {
+  async asyncData() {
     return {
-      redirectTo: redirect || DEFAULT_REDIRECT,
       user: {
         email: null,
         password: null,
       },
     };
   },
-  computed: {
-  },
   methods: {
     async login(data) {
       await this.$auth.login({ data });
+      this.$router.push('/');
       this.$toast.success('Bienvenue !');
     },
   },
