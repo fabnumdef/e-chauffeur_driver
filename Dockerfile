@@ -8,7 +8,7 @@ RUN mkdir -p ${APP_ROOT}
 WORKDIR ${APP_ROOT}
 ADD . ${APP_ROOT}
 
-RUN npm install
+RUN npm install --only=production
 
 ENV HOST 0.0.0.0
 
