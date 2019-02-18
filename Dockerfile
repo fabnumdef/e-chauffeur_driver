@@ -6,7 +6,7 @@ RUN apk update && apk upgrade && apk add git
 
 RUN mkdir -p ${APP_ROOT}
 WORKDIR ${APP_ROOT}
-ADD . ${APP_ROOT}
+COPY . ${APP_ROOT}
 
 RUN npm install --only=production
 
