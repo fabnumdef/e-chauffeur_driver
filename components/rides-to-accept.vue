@@ -9,7 +9,7 @@
         v-for="ride in rides"
         :key="ride.id"
         :ride="ride"
-         />
+      />
     </div>
   </div>
 </template>

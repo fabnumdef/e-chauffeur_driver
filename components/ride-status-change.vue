@@ -13,7 +13,9 @@
   </div>
 </template>
 <script>
-import { actions, CREATED, isDecline, CANCEL } from '~/api/status';
+import {
+  actions, CREATED, isDecline, CANCEL,
+} from '~/api/status';
 import dropdownButton from '~/components/dropdown.vue';
 
 export default {
@@ -36,7 +38,7 @@ export default {
     noCancel: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   computed: {
     ...Object.keys(actions)
@@ -46,7 +48,7 @@ export default {
       let transitions = this.getTransitions(this.status).filter((t) => {
         if (this.noCancel) {
           return t !== CANCEL;
-        } else if (this.cancelOnly) {
+        } if (this.cancelOnly) {
           return t === CANCEL;
         }
         return true;

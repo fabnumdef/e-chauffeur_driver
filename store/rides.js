@@ -2,7 +2,14 @@
 /* eslint-disable no-param-reassign */
 import { states } from '~/api/status';
 
-const statesToTrack = [states.VALIDATED, states.STARTED, states.ACCEPTED, states.IN_PROGRESS, states.WAITING, states.DELIVERED];
+const statesToTrack = [
+  states.VALIDATED,
+  states.STARTED,
+  states.ACCEPTED,
+  states.IN_PROGRESS,
+  states.WAITING,
+  states.DELIVERED,
+];
 
 export const state = () => ({
   rides: [],

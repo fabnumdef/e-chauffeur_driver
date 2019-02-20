@@ -26,13 +26,13 @@
 import { mapGetters } from 'vuex';
 
 export default {
-  async asyncData({ store }) {
-    await store.dispatch('context/fetchAccessibleCampuses');
-  },
   computed: {
     ...mapGetters({
       campuses: 'context/accessibleCampuses',
     }),
+  },
+  async asyncData({ store }) {
+    await store.dispatch('context/fetchAccessibleCampuses');
   },
 };
 </script>

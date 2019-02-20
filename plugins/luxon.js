@@ -13,5 +13,5 @@ export default () => {
       return DateTime.local().toLocaleString(DateTime[`date_${format}`.toUpperCase()]);
     }
     return value;
-  })
+  });
 };

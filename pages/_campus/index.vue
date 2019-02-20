@@ -2,7 +2,7 @@
   <section>
     <header class="container">
       <p class="pretitle">
-        {{'now'|format_date('full')}}
+        {{ 'now'|format_date('full') }}
       </p>
       <h1 class="title">
         Courses
@@ -25,16 +25,34 @@
           :key="ride.id"
           class="swiper-slide"
         >
-          <div class="notification" :class="getColorClass(ride.status)">
+          <div
+            class="notification"
+            :class="getColorClass(ride.status)"
+          >
             <div class="container">
-              <ride-status :status="ride.status" class="is-pulled-right" />
-              <p class="poi-label">Prochaine destination</p>
-              <p class="poi">{{ ride.departure.label }}</p>
-              <status-change :status="ride.status" no-cancel @change="changeStatus(ride, $event)"/>
+              <ride-status
+                :status="ride.status"
+                class="is-pulled-right"
+              />
+              <p class="poi-label">
+                Prochaine destination
+              </p>
+              <p class="poi">
+                {{ ride.departure.label }}
+              </p>
+              <status-change
+                :status="ride.status"
+                no-cancel
+                @change="changeStatus(ride, $event)"
+              />
             </div>
           </div>
 
-          <ride-card class="container" :ride="ride" cancel-only/>
+          <ride-card
+            class="container"
+            :ride="ride"
+            cancel-only
+          />
         </div>
       </div>
     </div>
@@ -56,17 +74,17 @@ export default {
     statusChange,
     ridesToAccept,
   },
-  async asyncData({
-    params, store,
-  }) {
-    await store.dispatch('rides/fetchRides', params.campus);
-    return { campus: params.campus };
-  },
   computed: {
     actions: () => actions,
     ...mapGetters({
       rides: 'rides/ridesToDo',
     }),
+  },
+  async asyncData({
+    params, store,
+  }) {
+    await store.dispatch('rides/fetchRides', params.campus);
+    return { campus: params.campus };
   },
   methods: {
     async changeStatus(ride, status) {
@@ -82,8 +100,10 @@ export default {
         case states.IN_PROGRESS:
         case states.DELIVERED:
           return 'is-primary';
+        default:
+          return '';
       }
-    }
+    },
   },
 };
 </script>
