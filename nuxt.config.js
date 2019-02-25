@@ -34,6 +34,7 @@ module.exports = {
         endpoints: {
           login: { url: '/jwt/generate', method: 'post', propertyName: 'token' },
           user: { url: '/jwt/user?mask=id,email', method: 'get', propertyName: false },
+          logout: null,
         },
       },
     },
