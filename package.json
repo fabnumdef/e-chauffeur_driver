@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.7.2",
     "@nuxtjs/auth": "^4.5.3",
     "@nuxtjs/axios": "^5.0.0",
+    "@nuxtjs/pwa": "^3.0.0-beta.8",
     "@nuxtjs/toast": "^3.0.2",
     "cross-env": "^5.2.0",
     "javascript-state-machine": "^3.1.0",

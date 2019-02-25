@@ -79,6 +79,7 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/toast',
+    '@nuxtjs/pwa',
     ['qonfucius-nuxt-bulma', { css: false, postcss: false }],
     'qonfucius-nuxt-fontawesome',
   ],
