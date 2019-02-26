@@ -1,25 +1,68 @@
 <template>
   <div class="buttons are-medium">
-    <div
-      :is="component(transition)"
+    <template
       v-for="(transition, i) in transitions"
-      :key="i"
-      :class="getClass(transition)"
-      :options="getOptions(transition)"
-      @click="emit(transition, $event)"
     >
-      {{ getText(transition) }}
-    </div>
+      <div
+        :is="component(transition)"
+        :key="`button${i}`"
+        :class="getClass(transition)"
+        :options="getOptions(transition)"
+        @click="emit(transition, $event)"
+      >
+        {{ getText(transition) }}
+      </div>
+      <bulma-modal
+        v-if="!!modalStatuses[transition]"
+        :key="`modal${i}`"
+        class="content"
+        @close="modalStatuses[transition] = false"
+      >
+        <h2 class="title">
+          Motif de l'annulation/refus
+        </h2>
+        <p>
+          Pour annuler une course, il est nécessaire de contacter le régulateur,
+          afin de lui indiquer la raison du refus/annulation, par exemple :
+        </p>
+        <ul>
+          <li>Surnombre de passagers</li>
+          <li>Problème technique</li>
+          <li>Problème humain</li>
+        </ul>
+        <div class="field is-grouped">
+          <p class="control">
+            <button
+              type="button"
+              class="button is-primary is-inverted"
+              @click="modalStatuses[transition] = false"
+            >
+              Ne pas Annuler
+            </button>
+          </p>
+          <p class="control">
+            <a
+              type="button"
+              class="button is-danger is-inverted"
+              :href="`tel:${campus.phone.drivers}`"
+            >Contacter le régulateur</a>
+          </p>
+        </div>
+      </bulma-modal>
+    </template>
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import {
-  actions, CREATED, isDecline, CANCEL,
+  actions, CREATED, CANCEL, DECLINE,
 } from '~/api/status';
 import dropdownButton from '~/components/dropdown.vue';
+import bulmaModal from '~/components/bulma-modal.vue';
 
 export default {
   components: {
+    bulmaModal,
     dropdownButton,
   },
   props: {
@@ -40,12 +83,20 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      modalStatuses: {
+        [DECLINE]: false,
+        [CANCEL]: false,
+      },
+    };
+  },
   computed: {
     ...Object.keys(actions)
       .map(a => ({ [a]: () => actions[a] }))
       .reduce((acc, curr) => Object.assign(acc, curr), {}),
     transitions() {
-      let transitions = this.getTransitions(this.status).filter((t) => {
+      return this.getTransitions(this.status).filter((t) => {
         if (this.noCancel) {
           return t !== CANCEL;
         } if (this.cancelOnly) {
@@ -53,28 +104,29 @@ export default {
         }
         return true;
       });
-
-      if (transitions.find(isDecline)) {
-        const decline = transitions.filter(isDecline);
-        transitions = transitions.filter(t => !isDecline(t));
-        transitions.push(decline);
-      }
-      return transitions;
     },
+    ...mapGetters({ campus: 'context/campus' }),
   },
   methods: {
     emit(transition, id) {
+      if (this.hasModalIntercept(transition)) {
+        this.modalStatuses[transition] = true;
+        return;
+      }
       if (Array.isArray(transition)) {
         this.$emit('change', id);
       } else {
         this.$emit('change', transition);
       }
     },
+    hasModalIntercept(transition) {
+      return [CANCEL, DECLINE].includes(transition);
+    },
     getClass(transition) {
       return {
         button: !Array.isArray(transition),
         'is-fullwidth': !!this.fullwidth,
-        'is-danger': (Array.isArray(transition) && transition.length > 1 && isDecline(transition[0]))
+        'is-danger': [actions.DECLINE].includes(transition)
           || [actions.CANCEL].includes(transition),
         'is-success': [actions.ACCEPT].includes(transition),
         'is-outlined': [actions.CANCEL].includes(transition),
@@ -84,12 +136,8 @@ export default {
       switch (transition) {
         case actions.ACCEPT:
           return 'Accepter la course';
-        case actions.DECLINE_TRAFFIC:
-          return 'Problème de circulation';
-        case actions.DECLINE_NOBODY:
-          return 'Non présentation du passager';
-        case actions.DECLINE_DAMAGE:
-          return 'Problème de matériel';
+        case actions.DECLINE:
+          return 'Refuser la course';
         case actions.CANCEL:
           return 'Annuler la course';
         case actions.START:
@@ -103,9 +151,6 @@ export default {
         case actions.FINISH:
           return 'Je rentre';
         default:
-      }
-      if (Array.isArray(transition) && transition.length > 1 && isDecline(transition[0])) {
-        return 'Refuser la course';
       }
       return transition;
     },
