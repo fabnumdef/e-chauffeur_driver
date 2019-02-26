@@ -23,7 +23,7 @@
     "lodash.merge": "^4.6.1",
     "luxon": "^1.11.2",
     "node-sass": "^4.11.0",
-    "nuxt": "^2.4.3",
+    "nuxt": "^2.4.5",
     "qonfucius-nuxt-bulma": "0.0.3",
     "qonfucius-nuxt-fontawesome": "^1.0.1",
     "qs": "^6.6.0",
