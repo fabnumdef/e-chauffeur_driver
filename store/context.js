@@ -24,7 +24,7 @@ export const getters = {
 export const actions = {
   async setCampus({ commit }, campus) {
     try {
-      const { data } = await this.$api.campuses.getCampus(campus, 'id,name');
+      const { data } = await this.$api.campuses.getCampus(campus, 'id,name,phone(drivers)');
       commit('setCampus', data);
     } catch (e) {
       throw new Error('Campus not fond');
