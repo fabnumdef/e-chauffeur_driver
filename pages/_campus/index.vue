@@ -4,22 +4,16 @@
       <p class="pretitle">
         {{ 'now'|format_date('full') }}
       </p>
-      <h1 class="title">
-        Courses
-      </h1>
     </header>
     <div
-      v-if="rides.length < 1"
-      class="no-rides container"
+      v-swiper:ridesSwipe="{pagination: {
+        el: '.swiper-pagination'
+      }}"
     >
-      En attente de courses, vous n'avez aucune course à effectuer pour l'instant.
-    </div>
-    <div
-      v-else
-      v-swiper:ridesSwipe="{}"
-    >
+      <div class="container">
+        <div class="swiper-pagination" />
+      </div>
       <div class="swiper-wrapper">
-        <div class="swiper-pagination swiper-pagination-bullets" />
         <div
           v-for="ride in rides"
           :key="ride.id"
@@ -55,6 +49,12 @@
           />
         </div>
       </div>
+    </div>
+    <div
+      v-if="rides.length < 1"
+      class="no-rides container"
+    >
+      En attente de courses, vous n'avez aucune course à effectuer pour l'instant.
     </div>
     <rides-to-accept :campus="campus" />
   </section>
@@ -155,9 +155,22 @@ export default {
 
   .poi {
     font-size: $size-1;
+    line-height: $size-2;
+    padding-top: $size-7;
+    padding-bottom: $size-7;
     font-weight: bold;
     &-label {
       font-size: $size-7;
+    }
+  }
+  /deep/ .swiper-pagination {
+    position: relative;
+    text-align: left;
+    &-bullet {
+      height: 4px;
+      width: 60px;
+      border-radius: 0;
+      margin: 3px;
     }
   }
 </style>
