@@ -1,5 +1,5 @@
 const MODULE = 'position';
-const DELTA_METERS = 10;
+const DELTA_METERS = 1;
 
 export default function ({ app, store }) {
   let watchID;
