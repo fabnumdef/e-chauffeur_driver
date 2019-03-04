@@ -8,6 +8,9 @@ module.exports = {
   */
   head: {
     title: 'e-Chauffeur - Chauffeur',
+    htmlAttrs: {
+      lang: 'fr',
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -103,5 +106,12 @@ module.exports = {
   toast: {
     position: 'bottom-right',
     duration: 15000,
+  },
+
+  manifest: {
+    name: 'e-Chauffeur - Chauffeur',
+    short_name: 'e-Chauffeur',
+    description: 'Application chauffeur',
+    lang: 'fr',
   },
 };
