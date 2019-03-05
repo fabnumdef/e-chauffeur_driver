@@ -148,8 +148,6 @@ export default {
           return 'Passager pris en charge';
         case actions.DELIVER:
           return 'Passager à destination';
-        case actions.FINISH:
-          return 'Je rentre';
         default:
       }
       return transition;

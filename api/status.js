@@ -10,7 +10,6 @@ export const STARTED = 'started';
 export const WAITING = 'waiting';
 export const IN_PROGRESS = 'progress';
 export const DELIVERED = 'delivered';
-export const DONE = 'done';
 export const CANCELED = 'canceled';
 
 export const states = {
@@ -24,7 +23,6 @@ export const states = {
   WAITING,
   IN_PROGRESS,
   DELIVERED,
-  DONE,
   CANCELED,
 };
 
@@ -37,7 +35,6 @@ export const START = 'start-up';
 export const WAIT = 'stay';
 export const PROGRESS = 'progress';
 export const DELIVER = 'deliver';
-export const FINISH = 'finish';
 export const CANCEL = 'void';
 
 export const actions = {
@@ -50,7 +47,6 @@ export const actions = {
   WAIT,
   PROGRESS,
   DELIVER,
-  FINISH,
   CANCEL,
 };
 
@@ -66,7 +62,6 @@ export default (init = CREATED) => new StateMachine({
     { name: WAIT, from: STARTED, to: WAITING },
     { name: PROGRESS, from: WAITING, to: IN_PROGRESS },
     { name: DELIVER, from: IN_PROGRESS, to: DELIVERED },
-    { name: FINISH, from: DELIVERED, to: DONE },
     { name: CANCEL, from: [ACCEPTED, STARTED, WAITING, IN_PROGRESS, DELIVERED], to: CANCELED },
   ],
 });

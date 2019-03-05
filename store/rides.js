@@ -8,7 +8,6 @@ const statesToTrack = [
   states.ACCEPTED,
   states.IN_PROGRESS,
   states.WAITING,
-  states.DELIVERED,
 ];
 
 export const state = () => ({
