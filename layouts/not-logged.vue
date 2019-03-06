@@ -12,7 +12,7 @@ export default {
   @import "~assets/css/head";
   .blue-layout {
     background: $blue-medium;
-    height: 100%;
+    min-height: 100%;
     padding: 50px;
     .label {
       color: $white;
