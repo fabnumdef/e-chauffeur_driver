@@ -31,14 +31,14 @@ export default {
       campuses: 'context/accessibleCampuses',
     }),
   },
-  mounted() {
-    if (this.campuses && this.campuses.length === 1) {
-      const [campus] = this.campuses
-      this.$router.push({name: 'campus', params: { campus: campus.id }});
-    }
-  },
   async asyncData({ store }) {
     await store.dispatch('context/fetchAccessibleCampuses');
+  },
+  mounted() {
+    if (this.campuses && this.campuses.length === 1) {
+      const [campus] = this.campuses;
+      this.$router.push({ name: 'campus', params: { campus: campus.id } });
+    }
   },
 };
 </script>

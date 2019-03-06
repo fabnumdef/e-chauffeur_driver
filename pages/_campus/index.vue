@@ -1,9 +1,19 @@
 <template>
   <section>
     <header class="container">
-      <p class="pretitle">
-        {{ 'now'|format_date('full') }}
-      </p>
+      <div class="columns">
+        <p class="column pretitle">
+          {{ 'now'|format_date('full') }}
+        </p>
+        <div class="column is-narrow">
+          <button
+            class="button is-danger is-small"
+            @click="logout()"
+          >
+            Déconnexion
+          </button>
+        </div>
+      </div>
     </header>
     <div
       v-swiper:ridesSwipe="{pagination: {
@@ -106,6 +116,14 @@ export default {
           return 'is-primary';
         default:
           return '';
+      }
+    },
+    logout() {
+      try {
+        this.$auth.logout();
+      } finally {
+        this.$toasted.success('À bientôt !');
+        this.$router.push('/login');
       }
     },
   },

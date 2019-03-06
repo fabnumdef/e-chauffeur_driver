@@ -66,9 +66,14 @@ export default {
   },
   methods: {
     async login(data) {
-      await this.$auth.login({ data });
-      this.$router.push('/');
-      this.$toast.success('Bienvenue !');
+      try {
+        await this.$auth.login({ data });
+        this.$router.push('/');
+        this.$toast.success('Bienvenue !');
+      } catch (e) {
+        this.$toast.error('Une erreur est survenue, merci de vérifier votre email et mot de passe. '
+          + 'Contactez le régulateur pour réinitialiser le mot de passe.');
+      }
     },
   },
 };
