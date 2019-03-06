@@ -52,9 +52,13 @@
     </div>
     <div
       v-if="rides.length < 1"
-      class="no-rides container"
+      class="notification is-success"
     >
-      En attente de courses, vous n'avez aucune course à effectuer pour l'instant.
+      <div class="container">
+        <p class="poi">
+          Pas de courses
+        </p>
+      </div>
     </div>
     <rides-to-accept :campus="campus" />
   </section>
