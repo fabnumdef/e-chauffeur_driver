@@ -10,7 +10,7 @@
             class="button is-danger is-small"
             @click="logout()"
           >
-            Déconnexion
+            Se déconnecter
           </button>
         </div>
       </div>
