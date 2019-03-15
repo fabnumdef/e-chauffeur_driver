@@ -19,12 +19,12 @@ export const mutations = {
     s.rides = rides
       .filter(({ id }) => !!id);
   },
-  pushRide: (s, ride) => {
+  pushRide: (s, { ride, loggedUser }) => {
     if (!ride.id) {
       throw new Error('Id is required');
     }
     const i = s.rides.findIndex(({ id }) => id === ride.id);
-    const isToTrack = statesToTrack.includes(ride.status);
+    const isToTrack = statesToTrack.includes(ride.status) && loggedUser.id === ride.driver.id;
     if (i === -1) {
       if (isToTrack) {
         s.rides.push(ride);
