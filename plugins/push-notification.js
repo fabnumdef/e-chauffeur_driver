@@ -1,9 +1,20 @@
 import { DateTime } from 'luxon';
+import { VALIDATED } from '../api/status';
 
-export default async function pushNotification(ride) {
+function isNewRide(ride, currentRides) {
+  if (!ride || ride.status !== VALIDATED) {
+    return false;
+  }
+  if (!currentRides || currentRides.length === 0) {
+    return true;
+  }
+  return !currentRides.some(r => r.id === ride.id);
+}
+
+export default async function pushNotification(ride, currentRides) {
   if ('serviceWorker' in navigator) {
     const [serviceWorker] = await navigator.serviceWorker.getRegistrations();
-    if (!serviceWorker || !ride || ride.status !== 'validated') {
+    if (!serviceWorker || !isNewRide(ride, currentRides)) {
       return;
     }
     let { permission } = Notification;
