@@ -6,12 +6,11 @@
           {{ 'now'|format_date('full') }}
         </p>
         <div class="column is-narrow">
-          <button
-            class="button is-danger is-small"
-            @click="logout()"
+          <logout-button
+            class="is-danger is-small"
           >
             Se déconnecter
-          </button>
+          </logout-button>
         </div>
       </div>
     </header>
@@ -80,6 +79,7 @@ import rideStatus from '~/components/ride-status-badge.vue';
 import rideCard from '~/components/ride-card.vue';
 import statusChange from '~/components/ride-status-change.vue';
 import ridesToAccept from '~/components/rides-to-accept.vue';
+import logoutButton from '~/components/logout-button.vue';
 
 export default {
   components: {
@@ -87,6 +87,7 @@ export default {
     rideStatus,
     statusChange,
     ridesToAccept,
+    logoutButton,
   },
   computed: {
     actions: () => actions,
@@ -116,14 +117,6 @@ export default {
           return 'is-primary';
         default:
           return '';
-      }
-    },
-    logout() {
-      try {
-        this.$auth.logout();
-      } finally {
-        this.$toasted.success('À bientôt !');
-        this.$router.push('/login');
       }
     },
   },

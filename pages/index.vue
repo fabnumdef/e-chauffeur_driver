@@ -1,8 +1,19 @@
 <template>
   <div class="container">
-    <h1 class="title">
-      Sélection du campus
-    </h1>
+    <div class="columns">
+      <div class="column">
+        <h1 class="title">
+          Sélection du campus
+        </h1>
+      </div>
+      <div class="column is-narrow">
+        <logout-button
+          class="is-danger is-small"
+        >
+          Se déconnecter
+        </logout-button>
+      </div>
+    </div>
     <ul
       v-if="campuses"
       class="columns"
@@ -24,8 +35,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import logoutButton from '~/components/logout-button.vue';
 
 export default {
+  components: {
+    logoutButton,
+  },
   computed: {
     ...mapGetters({
       campuses: 'context/accessibleCampuses',
@@ -42,3 +57,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .container {
+    margin-top: 10px;
+  }
+</style>
