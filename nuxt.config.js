@@ -84,6 +84,14 @@ module.exports = {
     '@nuxtjs/auth',
     '@nuxtjs/toast',
     '@nuxtjs/pwa',
+    [
+      '@fabnumdef/e-chauffeur_lib-vue',
+      {
+        components: {
+          ecButton: 'atoms/button.vue',
+        },
+      },
+    ],
     ['qonfucius-nuxt-bulma', { css: false, postcss: false }],
     'qonfucius-nuxt-fontawesome',
   ],

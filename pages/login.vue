@@ -39,9 +39,7 @@
 
       <div class="field login is-grouped">
         <div class="control">
-          <button class="button">
-            Me connecter
-          </button>
+          <ec-button>Me connecter</ec-button>
         </div>
       </div>
     </form>
