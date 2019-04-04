@@ -18,6 +18,7 @@
       v-swiper:ridesSwipe="{pagination: {
         el: '.swiper-pagination'
       }}"
+      @slideChange="slideChange"
     >
       <div class="container">
         <div class="swiper-pagination" />
@@ -101,9 +102,15 @@ export default {
     await store.dispatch('rides/fetchRides', params.campus);
     return { campus: params.campus };
   },
+  mounted() {
+    this.slideChange();
+  },
   methods: {
     async changeStatus(ride, status) {
       return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride.id, status);
+    },
+    slideChange() {
+      this.$store.dispatch('rides/selectRide', this.ridesSwipe.activeIndex);
     },
     getColorClass(status) {
       switch (status) {
