@@ -79,8 +79,6 @@ module.exports = {
   */
   modules: [
     '@nuxtjs/auth',
-    '@nuxtjs/toast',
-    '@nuxtjs/pwa',
     [
       '@fabnumdef/e-chauffeur_lib-vue',
       {

@@ -15,8 +15,6 @@
     "@fabnumdef/e-chauffeur_lib-vue": "github:fabnumdef/e-chauffeur_lib-vue",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@nuxtjs/auth": "^4.5.3",
-    "@nuxtjs/pwa": "^3.0.0-beta.14",
-    "@nuxtjs/toast": "^3.0.2",
     "cross-env": "^5.2.0",
     "javascript-state-machine": "^3.1.0",
     "lodash.merge": "^4.6.1",
