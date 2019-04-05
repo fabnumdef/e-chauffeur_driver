@@ -3,9 +3,6 @@ const pkg = require('./package');
 module.exports = {
   mode: 'spa',
 
-  /*
-  ** Headers of the page
-  */
   head: {
     title: 'e-Chauffeur - Chauffeur',
     htmlAttrs: {
@@ -20,9 +17,6 @@ module.exports = {
     ],
   },
 
-  /*
-  ** Customize the progress-bar color
-  */
   loading: { color: '#fff' },
 
   auth: {
@@ -56,27 +50,17 @@ module.exports = {
     apiUrl: process.env.API_URL,
   },
 
-  /*
-  ** Global CSS
-  */
   css: [
     'swiper/dist/css/swiper.css',
     { src: '~assets/css/main.scss', lang: 'scss' },
   ],
 
-  /*
-  ** Plugins to load before mounting the App
-  */
   plugins: [
     '~/api',
     '~/plugins/states.js',
     { src: '~/plugins/swiper.js', ssr: false },
-    '~/plugins/luxon.js',
   ],
 
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
     '@nuxtjs/auth',
     [
