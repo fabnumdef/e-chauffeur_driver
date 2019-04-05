@@ -69,7 +69,6 @@ module.exports = {
   */
   plugins: [
     '~/api',
-    '~/plugins/axios.js',
     '~/plugins/states.js',
     { src: '~/plugins/swiper.js', ssr: false },
     '~/plugins/luxon.js',
@@ -79,8 +78,6 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios',
     '@nuxtjs/auth',
     '@nuxtjs/toast',
     '@nuxtjs/pwa',
@@ -95,12 +92,6 @@ module.exports = {
     ['qonfucius-nuxt-bulma', { css: false, postcss: false }],
     'qonfucius-nuxt-fontawesome',
   ],
-  /*
-  ** Axios module configuration
-  */
-  axios: {
-    // See https://github.com/nuxt-community/axios-module#options
-  },
 
   fontAwesome: {
     packs: [
