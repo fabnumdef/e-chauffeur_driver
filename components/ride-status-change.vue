@@ -56,7 +56,7 @@
 import { mapGetters } from 'vuex';
 import {
   actions, CREATED, CANCEL, DECLINE,
-} from '~/api/status';
+} from '@fabnumdef/e-chauffeur_lib-vue/api/status';
 import dropdownButton from '~/components/dropdown.vue';
 import bulmaModal from '~/components/bulma-modal.vue';
 

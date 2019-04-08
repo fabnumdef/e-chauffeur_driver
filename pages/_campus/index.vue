@@ -74,7 +74,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { actions, states } from '~/api/status';
+import { actions, states } from '@fabnumdef/e-chauffeur_lib-vue/api/status';
 import rideStatus from '~/components/ride-status-badge.vue';
 import rideCard from '~/components/ride-card.vue';
 import statusChange from '~/components/ride-status-change.vue';

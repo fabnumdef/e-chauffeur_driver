@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import { VALIDATED } from '../api/status';
+import { VALIDATED } from '@fabnumdef/e-chauffeur_lib-vue/api/status';
 
 function isNewRide(ride, currentRides) {
   if (!ride || ride.status !== VALIDATED) {

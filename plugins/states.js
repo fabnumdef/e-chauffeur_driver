@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import StateMachine from '../api/status';
+import StateMachine from '@fabnumdef/e-chauffeur_lib-vue/api/status';
 
 export default () => {
   Vue.mixin({

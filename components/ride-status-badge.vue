@@ -34,7 +34,7 @@
 import {
   states,
   CREATED,
-} from '~/api/status';
+} from '@fabnumdef/e-chauffeur_lib-vue/api/status';
 
 export default {
   props: {
