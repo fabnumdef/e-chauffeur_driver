@@ -56,7 +56,6 @@ module.exports = {
   ],
 
   plugins: [
-    '~/api',
     '~/plugins/states.js',
     { src: '~/plugins/swiper.js', ssr: false },
   ],
@@ -69,6 +68,7 @@ module.exports = {
         components: {
           ecButton: 'atoms/button.vue',
         },
+        api: ['jwt', 'rides', 'campuses', 'status'],
       },
     ],
     ['qonfucius-nuxt-bulma', { css: false, postcss: false }],

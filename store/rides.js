@@ -49,7 +49,7 @@ export const actions = {
         campus,
         this.$auth.user.id,
         'id,start,end,phone,departure(label),arrival(label),passengersCount,car(id,label,model(label)),status,comments',
-      ).getRides(...statesToTrack);
+      ).getDriverRides(...statesToTrack);
       commit('setRides', data);
     } catch (e) {
       throw new Error('Rides fetching failed');
