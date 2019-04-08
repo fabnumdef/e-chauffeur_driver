@@ -71,8 +71,6 @@ module.exports = {
         api: ['jwt', 'rides', 'campuses', 'status'],
       },
     ],
-    ['qonfucius-nuxt-bulma', { css: false, postcss: false }],
-    'qonfucius-nuxt-fontawesome',
   ],
 
   fontAwesome: {
