@@ -10,6 +10,10 @@ export default function ({ env, store, app }, inject) {
   inject('io', ioInstance);
   ioInstance.on('connect', () => {
     ioInstance.emit('roomJoinDriver', app.$auth.$storage.getUniversal(authHeaderKey));
+    store.dispatch('reconnecting', false);
+  });
+  ioInstance.on('reconnecting', () => {
+    store.dispatch('reconnecting', true);
   });
   const autoConnect = (isLogged) => {
     if (isLogged) {

@@ -14,6 +14,7 @@
         </div>
       </div>
     </header>
+    <reconnecting-hero :show="isReconnecting" />
     <div
       v-swiper:ridesSwipe="{pagination: {
         el: '.swiper-pagination'
@@ -81,6 +82,7 @@ import rideCard from '~/components/ride-card.vue';
 import statusChange from '~/components/ride-status-change.vue';
 import ridesToAccept from '~/components/rides-to-accept.vue';
 import logoutButton from '~/components/logout-button.vue';
+import reconnectingHero from '~/components/reconnecting-hero.vue';
 
 export default {
   components: {
@@ -89,11 +91,13 @@ export default {
     statusChange,
     ridesToAccept,
     logoutButton,
+    reconnectingHero,
   },
   computed: {
     actions: () => actions,
     ...mapGetters({
       rides: 'rides/ridesToDo',
+      isReconnecting: 'isReconnecting',
     }),
   },
   async asyncData({
