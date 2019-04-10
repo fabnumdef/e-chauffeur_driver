@@ -12,6 +12,7 @@ const statesToTrack = [
 
 export const state = () => ({
   rides: [],
+  selectedRide: {},
 });
 
 export const mutations = {
@@ -35,11 +36,17 @@ export const mutations = {
       s.rides.splice(i, 1);
     }
   },
+  selectRide: (s, index) => {
+    if (s.rides && s.rides[index]) {
+      s.selectedRide = s.rides[index];
+    }
+  },
 };
 
 export const getters = {
   ridesToDo: s => s.rides.filter(({ status }) => status !== states.VALIDATED),
   ridesToAccept: s => s.rides.filter(({ status }) => status === states.VALIDATED),
+  selectedRide: s => s.selectedRide,
 };
 
 export const actions = {
@@ -54,5 +61,8 @@ export const actions = {
     } catch (e) {
       throw new Error('Rides fetching failed');
     }
+  },
+  selectRide({ commit }, index) {
+    commit('selectRide', index);
   },
 };

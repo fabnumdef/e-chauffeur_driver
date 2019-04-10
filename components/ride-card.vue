@@ -32,13 +32,6 @@
       <li>Heure de prise en charge : <strong>{{ ride.start|format_time('24_simple') }}</strong></li>
       <li>
         Tel. portable passager : <strong>{{ ride.phone ? 'Oui' : 'Non' }}</strong>
-        <a
-          v-if="ride.phone"
-          :href="`tel:${ride.phone}`"
-          class="button is-pulled-right phone-button"
-        >
-          Appeler
-        </a>
       </li>
       <li v-if="ride.car">
         <strong v-if="ride.car.model">
@@ -90,9 +83,13 @@ export default {
     border-color: $text;
     box-sizing: border-box;
   }
+  .input, /deep/ .control .icon {
+    font-size: 24px;
+  }
 
   .list-info {
     padding: $size-5 0;
+    font-size: 21px;
   }
 
   .subtitle {
