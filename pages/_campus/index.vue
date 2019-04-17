@@ -14,10 +14,12 @@
         </div>
       </div>
     </header>
+    <reconnecting-hero :show="isReconnecting" />
     <div
       v-swiper:ridesSwipe="{pagination: {
         el: '.swiper-pagination'
       }}"
+      @slideChange="slideChange"
     >
       <div class="container">
         <div class="swiper-pagination" />
@@ -80,6 +82,7 @@ import rideCard from '~/components/ride-card.vue';
 import statusChange from '~/components/ride-status-change.vue';
 import ridesToAccept from '~/components/rides-to-accept.vue';
 import logoutButton from '~/components/logout-button.vue';
+import reconnectingHero from '~/components/reconnecting-hero.vue';
 
 export default {
   components: {
@@ -88,11 +91,13 @@ export default {
     statusChange,
     ridesToAccept,
     logoutButton,
+    reconnectingHero,
   },
   computed: {
     actions: () => actions,
     ...mapGetters({
       rides: 'rides/ridesToDo',
+      isReconnecting: 'isReconnecting',
     }),
   },
   async asyncData({
@@ -101,9 +106,15 @@ export default {
     await store.dispatch('rides/fetchRides', params.campus);
     return { campus: params.campus };
   },
+  mounted() {
+    this.slideChange();
+  },
   methods: {
     async changeStatus(ride, status) {
       return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride.id, status);
+    },
+    slideChange() {
+      this.$store.dispatch('rides/selectRide', this.ridesSwipe.activeIndex);
     },
     getColorClass(status) {
       switch (status) {
