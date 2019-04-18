@@ -15,13 +15,10 @@
     "@fabnumdef/e-chauffeur_lib-vue": "github:fabnumdef/e-chauffeur_lib-vue",
     "@fortawesome/free-solid-svg-icons": "^5.8.1",
     "@nuxtjs/auth": "^4.5.3",
-    "cross-env": "^5.2.0",
     "node-sass": "^4.11.0",
     "nuxt": "^2.6.1",
     "sass-loader": "^7.1.0",
-    "socket.io-client": "^2.2.0",
     "vue-awesome-swiper": "^3.1.3",
-    "vue-socket.io-extended": "^3.2.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
