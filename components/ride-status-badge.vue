@@ -31,16 +31,13 @@
   </span>
 </template>
 <script>
-import {
-  states,
-  CREATED,
-} from '@fabnumdef/e-chauffeur_lib-vue/api/status';
+import * as states from '@fabnumdef/e-chauffeur_lib-vue/api/status/states';
 
 export default {
   props: {
     status: {
       type: String,
-      default: CREATED,
+      default: states.CREATED,
     },
   },
   computed: {

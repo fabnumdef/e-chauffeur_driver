@@ -5,19 +5,10 @@ module.exports = {
 
   head: {
     title: 'e-Chauffeur - Chauffeur',
-    htmlAttrs: {
-      lang: 'fr',
-    },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-    ],
     link: [
       { rel: 'stylesheet', href: '//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' },
     ],
   },
-
-  loading: { color: '#fff' },
 
   auth: {
     redirect: {
@@ -25,15 +16,6 @@ module.exports = {
       logout: '/',
       callback: '/login',
       home: '/',
-    },
-    strategies: {
-      local: {
-        endpoints: {
-          login: { url: '/jwt/generate?mask=token', method: 'post', propertyName: 'token' },
-          user: { url: '/jwt/user?mask=id,email', method: 'get', propertyName: false },
-          logout: null,
-        },
-      },
     },
     plugins: [
       '~/plugins/geolocation.js',
@@ -56,12 +38,10 @@ module.exports = {
   ],
 
   plugins: [
-    '~/plugins/states.js',
     { src: '~/plugins/swiper.js', ssr: false },
   ],
 
   modules: [
-    '@nuxtjs/auth',
     [
       '@fabnumdef/e-chauffeur_lib-vue',
       {
@@ -69,6 +49,7 @@ module.exports = {
           ecButton: 'atoms/button.vue',
         },
         api: ['jwt', 'rides', 'campuses', 'status'],
+        withAuth: true,
       },
     ],
   ],
@@ -91,15 +72,9 @@ module.exports = {
     ],
   },
 
-  toast: {
-    position: 'bottom-right',
-    duration: 15000,
-  },
-
   manifest: {
     name: 'e-Chauffeur - Chauffeur',
     short_name: 'e-Chauffeur',
     description: 'Application chauffeur',
-    lang: 'fr',
   },
 };

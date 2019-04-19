@@ -76,7 +76,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { actions, states } from '@fabnumdef/e-chauffeur_lib-vue/api/status';
+import * as states from '@fabnumdef/e-chauffeur_lib-vue/api/status/states';
+import * as actions from '@fabnumdef/e-chauffeur_lib-vue/api/status/transitions';
 import rideStatus from '~/components/ride-status-badge.vue';
 import rideCard from '~/components/ride-card.vue';
 import statusChange from '~/components/ride-status-change.vue';
@@ -111,7 +112,7 @@ export default {
   },
   methods: {
     async changeStatus(ride, status) {
-      return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride.id, status);
+      return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride, status);
     },
     slideChange() {
       this.$store.dispatch('rides/selectRide', this.ridesSwipe.activeIndex);

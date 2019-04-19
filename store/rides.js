@@ -1,6 +1,6 @@
 // We've to disable param reassign, because it's the common behavior of vuex
 /* eslint-disable no-param-reassign */
-import { states } from '@fabnumdef/e-chauffeur_lib-vue/api/status';
+import * as states from '@fabnumdef/e-chauffeur_lib-vue/api/status/states';
 
 const statesToTrack = [
   states.VALIDATED,
@@ -54,9 +54,8 @@ export const actions = {
     try {
       const { data } = await this.$api.rides(
         campus,
-        this.$auth.user.id,
         'id,start,end,phone,departure(label),arrival(label),passengersCount,car(id,label,model(label)),status,comments',
-      ).getDriverRides(...statesToTrack);
+      ).getDriverRides(this.$auth.user.id, ...statesToTrack);
       commit('setRides', data);
     } catch (e) {
       throw new Error('Rides fetching failed');
