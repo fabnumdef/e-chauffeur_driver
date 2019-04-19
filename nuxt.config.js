@@ -48,7 +48,11 @@ module.exports = {
         components: {
           ecButton: 'atoms/button.vue',
         },
-        api: ['jwt', 'rides', 'campuses', 'status'],
+        api: {
+          jwt: 'jwt',
+          rides: 'rides',
+          campuses: 'campuses',
+        },
         withAuth: true,
       },
     ],
