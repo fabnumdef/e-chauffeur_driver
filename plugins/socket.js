@@ -1,15 +1,9 @@
-import Vue from 'vue';
-import VueSocketio from 'vue-socket.io-extended';
-import io from 'socket.io-client';
+import { AUTH_HEADER_KEY } from '@fabnumdef/e-chauffeur_lib-vue/plugins/socket';
 
-const authHeaderKey = '_token.local';
-
-export default function ({ env, store, app }, inject) {
-  const ioInstance = io(env.apiUrl, { autoConnect: false });
-  Vue.use(VueSocketio, ioInstance, { store });
-  inject('io', ioInstance);
+export default function ({ app, store }) {
+  const ioInstance = app.$io;
   ioInstance.on('connect', () => {
-    ioInstance.emit('roomJoinDriver', app.$auth.$storage.getUniversal(authHeaderKey));
+    ioInstance.emit('roomJoinDriver', app.$auth.$storage.getUniversal(AUTH_HEADER_KEY));
     store.dispatch('reconnecting', false);
   });
   ioInstance.on('reconnecting', () => {

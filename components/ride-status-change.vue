@@ -54,9 +54,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import {
-  actions, CREATED, CANCEL, DECLINE,
-} from '~/api/status';
+import { CREATED } from '@fabnumdef/e-chauffeur_lib-vue/api/status/states';
+import * as actions from '@fabnumdef/e-chauffeur_lib-vue/api/status/transitions';
 import dropdownButton from '~/components/dropdown.vue';
 import bulmaModal from '~/components/bulma-modal.vue';
 
@@ -86,8 +85,8 @@ export default {
   data() {
     return {
       modalStatuses: {
-        [DECLINE]: false,
-        [CANCEL]: false,
+        [actions.DECLINE]: false,
+        [actions.CANCEL]: false,
       },
     };
   },
@@ -98,9 +97,9 @@ export default {
     transitions() {
       return this.getTransitions(this.status).filter((t) => {
         if (this.noCancel) {
-          return t !== CANCEL;
+          return t !== actions.CANCEL;
         } if (this.cancelOnly) {
-          return t === CANCEL;
+          return t === actions.CANCEL;
         }
         return true;
       });
@@ -120,7 +119,7 @@ export default {
       }
     },
     hasModalIntercept(transition) {
-      return [CANCEL, DECLINE].includes(transition);
+      return [actions.CANCEL, actions.DECLINE].includes(transition);
     },
     getClass(transition) {
       return {
