@@ -97,8 +97,15 @@ export default {
     transitions() {
       return this.getTransitions(this.status).filter((t) => {
         if (this.noCancel) {
-          return t !== actions.CANCEL;
-        } if (this.cancelOnly) {
+          return ![
+            actions.CANCEL,
+            actions.CANCEL_REQUESTED_CUSTOMER,
+            actions.CANCEL_CUSTOMER_OVERLOAD,
+            actions.CANCEL_CUSTOMER_MISSING,
+            actions.CANCEL_TECHNICAL,
+          ].includes(t);
+        }
+        if (this.cancelOnly) {
           return t === actions.CANCEL;
         }
         return true;

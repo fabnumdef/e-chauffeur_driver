@@ -44,6 +44,7 @@
       :status="ride.status"
       fullwidth
       :cancel-only="cancelOnly"
+      :no-cancel="noCancel"
       @change="updateRide(ride, $event)"
     />
   </div>
@@ -64,6 +65,10 @@ export default {
       required: true,
     },
     cancelOnly: {
+      type: Boolean,
+      default: false,
+    },
+    noCancel: {
       type: Boolean,
       default: false,
     },
