@@ -9,6 +9,7 @@
         v-for="ride in rides"
         :key="ride.id"
         :ride="ride"
+        no-cancel
       />
     </div>
   </div>
