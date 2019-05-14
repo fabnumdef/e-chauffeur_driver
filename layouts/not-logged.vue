@@ -1,10 +1,14 @@
 <template>
   <div class="blue-layout">
+    <sidemenu-menu />
     <nuxt />
   </div>
 </template>
 <script>
+import sidemenuMenu from '../components/sidemenu-menu';
+
 export default {
+  components: { sidemenuMenu },
 };
 </script>
 

@@ -2,15 +2,11 @@
   <section>
     <header class="container">
       <div class="columns">
-        <p class="column pretitle">
-          {{ 'now'|format_date('full') }}
+        <p class="column">
+          <sidemenu-button />
         </p>
-        <div class="column is-narrow">
-          <logout-button
-            class="is-danger is-small"
-          >
-            Se déconnecter
-          </logout-button>
+        <div class="column is-narrow pretitle">
+          {{ 'now'|format_date('full') }}
         </div>
       </div>
     </header>
@@ -82,16 +78,16 @@ import rideStatus from '~/components/ride-status-badge.vue';
 import rideCard from '~/components/ride-card.vue';
 import statusChange from '~/components/ride-status-change.vue';
 import ridesToAccept from '~/components/rides-to-accept.vue';
-import logoutButton from '~/components/logout-button.vue';
 import reconnectingHero from '~/components/reconnecting-hero.vue';
+import sidemenuButton from '../../components/sidemenu-button';
 
 export default {
   components: {
+    sidemenuButton,
     rideCard,
     rideStatus,
     statusChange,
     ridesToAccept,
-    logoutButton,
     reconnectingHero,
   },
   computed: {
