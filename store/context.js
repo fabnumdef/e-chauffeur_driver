@@ -27,7 +27,7 @@ export const actions = {
       const { data } = await this.$api.campuses.getCampus(campus, 'id,name,phone(drivers)');
       commit('setCampus', data);
     } catch (e) {
-      throw new Error('Campus not fond');
+      throw new Error('Base non trouvée');
     }
   },
 
