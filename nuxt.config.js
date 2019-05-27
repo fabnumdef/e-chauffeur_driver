@@ -54,6 +54,9 @@ module.exports = {
           campuses: 'campuses',
         },
         withAuth: true,
+        authPlugins: [
+          'auth-renew',
+        ],
       },
     ],
   ],
