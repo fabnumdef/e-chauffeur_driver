@@ -107,6 +107,14 @@ export default {
     await store.dispatch('rides/fetchRides', params.campus);
     return { campus: params.campus };
   },
+  watch: {
+    async isReconnecting() {
+      if (!this.isReconnecting) {
+        console.log('isRecon');
+        await this.$store.dispatch('rides/fetchRides', this.campus);
+      }
+    },
+  },
   mounted() {
     this.slideChange();
   },
