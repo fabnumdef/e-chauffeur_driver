@@ -4,16 +4,21 @@ import pushNotification from '../plugins/push-notification';
 
 export const state = () => ({
   isReconnecting: false,
+  isMenuOpen: false,
 });
 
 export const mutations = {
   reconnecting: (s, reconnecting = true) => {
     s.isReconnecting = reconnecting;
   },
+  toggleMenu: (s, bool) => {
+    s.isMenuOpen = typeof bool !== 'undefined' ? bool : !s.isMenuOpen;
+  },
 };
 
 export const getters = {
   isReconnecting: s => s.isReconnecting,
+  isMenuOpen: s => s.isMenuOpen,
 };
 
 export const actions = {
