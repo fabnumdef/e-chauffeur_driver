@@ -25,7 +25,7 @@ module.exports = {
   },
 
   router: {
-    middleware: ['auth'],
+    middleware: ['auth', 'menu'],
   },
 
   env: {
@@ -52,6 +52,7 @@ module.exports = {
           jwt: 'jwt',
           rides: 'rides',
           campuses: 'campuses',
+          users: 'users',
         },
         withAuth: true,
         authPlugins: [
@@ -74,6 +75,8 @@ module.exports = {
           'faAngleDown',
           'faHeadset',
           'faSpinner',
+          'faBars',
+          'faCar',
         ],
       },
     ],
