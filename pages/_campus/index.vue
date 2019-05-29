@@ -39,7 +39,7 @@
                 Prochaine destination
               </p>
               <p class="poi">
-                {{ ride.departure.label }}
+                {{ getNextStopLabel(ride) }}
               </p>
               <status-change
                 :status="ride.status"
@@ -125,6 +125,18 @@ export default {
           return 'is-primary';
         default:
           return '';
+      }
+    },
+    getNextStopLabel({ status, departure, arrival }) {
+      switch (status) {
+        case states.IN_PROGRESS:
+        case states.DELIVERED:
+          return arrival.label;
+        case states.ACCEPTED:
+        case states.STARTED:
+        case states.WAITING:
+        default:
+          return departure.label;
       }
     },
   },
