@@ -110,7 +110,6 @@ export default {
   watch: {
     async isReconnecting() {
       if (!this.isReconnecting) {
-        console.log('isRecon');
         await this.$store.dispatch('rides/fetchRides', this.campus);
       }
     },
