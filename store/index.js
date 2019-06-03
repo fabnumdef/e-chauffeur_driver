@@ -26,6 +26,9 @@ export const actions = {
   socket_rideUpdate({ commit, state }, payload) {
     pushNotification(payload, state.rides.rides.slice());
     commit('rides/pushRide', { ride: payload, loggedUser: state.auth.user });
+    if (Object.keys(state.rides.selectedRide).length === 0) {
+      commit('rides/selectRide', 0);
+    }
   },
   reconnecting({ commit }, reconnecting = true) {
     commit('reconnecting', reconnecting);
