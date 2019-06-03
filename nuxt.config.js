@@ -55,6 +55,9 @@ module.exports = {
           users: 'users',
         },
         withAuth: true,
+        authPlugins: [
+          'auth-renew',
+        ],
       },
     ],
   ],
