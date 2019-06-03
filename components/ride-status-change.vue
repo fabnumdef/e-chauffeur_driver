@@ -8,6 +8,7 @@
         :key="`button${i}`"
         :class="getClass(transition)"
         :options="getOptions(transition)"
+        :disabled="isReconnecting"
         @click="emit(transition, $event)"
       >
         {{ getText(transition) }}
@@ -111,7 +112,10 @@ export default {
         return true;
       });
     },
-    ...mapGetters({ campus: 'context/campus' }),
+    ...mapGetters({
+      campus: 'context/campus',
+      isReconnecting: 'isReconnecting',
+    }),
   },
   methods: {
     emit(transition, id) {
