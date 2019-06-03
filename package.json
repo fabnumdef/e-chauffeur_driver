@@ -12,7 +12,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@fabnumdef/e-chauffeur_lib-vue": "0.0.3",
+    "@fabnumdef/e-chauffeur_lib-vue": "0.0.5",
     "@fortawesome/free-solid-svg-icons": "^5.8.2",
     "node-sass": "^4.12.0",
     "nuxt": "^2.6.3",
