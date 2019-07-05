@@ -1,6 +1,6 @@
 {
   "name": "taxi-app",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Gaël",
   "private": true,
   "scripts": {
@@ -12,10 +12,10 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@fabnumdef/e-chauffeur_lib-vue": "0.0.2",
-    "@fortawesome/free-solid-svg-icons": "^5.8.1",
+    "@fabnumdef/e-chauffeur_lib-vue": "0.0.6",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
     "node-sass": "^4.12.0",
-    "nuxt": "^2.6.3",
+    "nuxt": "^2.8.1",
     "sass-loader": "^7.1.0",
     "vue-awesome-swiper": "^3.1.3"
   },
@@ -25,7 +25,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-import-resolver-webpack": "^0.11.0",
     "eslint-loader": "^2.1.2",
-    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-vue": "^5.2.2"
   },
   "peerDependencies": {

@@ -2,15 +2,11 @@
   <section>
     <header class="container">
       <div class="columns">
-        <p class="column pretitle">
-          {{ 'now'|format_date('full') }}
+        <p class="column">
+          <sidemenu-button />
         </p>
-        <div class="column is-narrow">
-          <logout-button
-            class="is-danger is-small"
-          >
-            Se déconnecter
-          </logout-button>
+        <div class="column is-narrow pretitle">
+          {{ 'now'|format_date('full') }}
         </div>
       </div>
     </header>
@@ -43,7 +39,7 @@
                 Prochaine destination
               </p>
               <p class="poi">
-                {{ ride.departure.label }}
+                {{ getNextStopLabel(ride) }}
               </p>
               <status-change
                 :status="ride.status"
@@ -82,16 +78,16 @@ import rideStatus from '~/components/ride-status-badge.vue';
 import rideCard from '~/components/ride-card.vue';
 import statusChange from '~/components/ride-status-change.vue';
 import ridesToAccept from '~/components/rides-to-accept.vue';
-import logoutButton from '~/components/logout-button.vue';
 import reconnectingHero from '~/components/reconnecting-hero.vue';
+import sidemenuButton from '../../components/sidemenu-button';
 
 export default {
   components: {
+    sidemenuButton,
     rideCard,
     rideStatus,
     statusChange,
     ridesToAccept,
-    logoutButton,
     reconnectingHero,
   },
   computed: {
@@ -106,6 +102,13 @@ export default {
   }) {
     await store.dispatch('rides/fetchRides', params.campus);
     return { campus: params.campus };
+  },
+  watch: {
+    async isReconnecting() {
+      if (!this.isReconnecting) {
+        await this.$store.dispatch('rides/fetchRides', this.campus);
+      }
+    },
   },
   mounted() {
     this.slideChange();
@@ -129,6 +132,18 @@ export default {
           return 'is-primary';
         default:
           return '';
+      }
+    },
+    getNextStopLabel({ status, departure, arrival }) {
+      switch (status) {
+        case states.IN_PROGRESS:
+        case states.DELIVERED:
+          return arrival.label;
+        case states.ACCEPTED:
+        case states.STARTED:
+        case states.WAITING:
+        default:
+          return departure.label;
       }
     },
   },

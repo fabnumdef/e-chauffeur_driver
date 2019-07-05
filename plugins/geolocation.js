@@ -18,6 +18,10 @@ export default function ({ app, store }) {
         ) {
           store.commit(`${MODULE}/setPosition`, coord);
         }
+      },
+      null,
+      {
+        enableHighAccuracy: true,
       });
     }
   };
