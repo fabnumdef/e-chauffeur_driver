@@ -31,7 +31,7 @@
           <li>Problème technique</li>
           <li>Problème humain</li>
         </ul>
-        <div class="field is-grouped">
+        <div class="field is-grouped buttons">
           <p class="control">
             <button
               type="button"

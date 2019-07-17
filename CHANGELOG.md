@@ -1,4 +1,7 @@
 # Changelog
+## Current
+### Fixes
+* Button group in modale was too large.
 ## Version 1.3.0
 ### Features
 * When the passenger is on board, show the arrival label in notification space.
