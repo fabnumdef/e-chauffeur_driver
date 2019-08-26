@@ -1,7 +1,8 @@
-FROM node:12-stretch-slim as base
+FROM node:12-alpine as base
 FROM base as builder
-RUN apt update && apt upgrade -y
-RUN apt install -y git
+
+RUN apk update && apk upgrade
+RUN apk add git
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -24,8 +25,7 @@ COPY . /usr/src/app/
 
 RUN npm run build
 
-ENV HOST 0.0.0.0
-
 EXPOSE 3000
-
+ENV HOST=0.0.0.0
+ENV PORT=3000
 CMD [ "npm", "start" ]
