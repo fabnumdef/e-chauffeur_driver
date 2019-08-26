@@ -1,6 +1,7 @@
 // We've to disable param reassign, because it's the common behavior of vuex
 /* eslint-disable no-param-reassign */
 import * as states from '@fabnumdef/e-chauffeur_lib-vue/api/status/states';
+import { DateTime } from 'luxon';
 
 const statesToTrack = [
   states.VALIDATED,
@@ -29,6 +30,17 @@ export const mutations = {
     if (i === -1) {
       if (isToTrack) {
         s.rides.push(ride);
+        s.rides.sort((a, b) => {
+          const startA = DateTime.fromISO(a.start);
+          const startB = DateTime.fromISO(b.start);
+          if (startA < startB) {
+            return -1;
+          }
+          if (startA > startB) {
+            return 1;
+          }
+          return 0;
+        });
       }
     } else if (isToTrack) {
       Object.assign(s.rides[i], ride);
