@@ -39,7 +39,7 @@ deploy_review:
     - helm init --upgrade --service-account tiller --force-upgrade
   script:
     - helm upgrade
-      --install --debug
+      --install
       --namespace e-chauffeur
       --set image.tag="${CI_COMMIT_REF_SLUG}"
       --set ingress.host="${URL_REVIEW}"
@@ -67,7 +67,7 @@ deploy_staging:
     - helm init --upgrade --service-account tiller --force-upgrade
   script:
     - helm upgrade
-      --install --debug
+      --install
       --namespace e-chauffeur
       --set image.tag="${CI_COMMIT_REF_SLUG}"
       --set ingress.host="${STAGING_DOMAIN}"
@@ -94,7 +94,7 @@ deploy_prod:
     - helm init --upgrade --service-account tiller --force-upgrade
   script:
     - helm upgrade
-      --install --debug
+      --install
       --namespace e-chauffeur
       --set image.tag="${CI_COMMIT_REF_SLUG}"
       --set ingress.host="${PRODUCTION_DOMAIN}"
