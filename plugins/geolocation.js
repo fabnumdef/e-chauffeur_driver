@@ -25,18 +25,20 @@ export default function ({ app, store }) {
       });
     }
   };
-  autoGeoloc(app.$auth.loggedIn);
-  app.$auth.$storage.watchState('loggedIn', autoGeoloc);
-  store.watch((state, getters) => getters['context/campus'] && getters[`${MODULE}/getPosition`], (position) => {
-    if (app.$auth.loggedIn && store.getters[`${MODULE}/hasPosition`] && store.getters['context/campus']) {
-      const rides = store.state.rides.rides && store.state.rides.rides.length > 0
-        ? store.state.rides.rides : [];
-      app.$io.emit('positionUpdate', {
-        user: app.$auth.user,
-        campus: store.getters['context/campus'],
-        position,
-        rides,
-      });
-    }
-  });
+  if (process.client && !!navigator && 'geolocation' in navigator) {
+    autoGeoloc(app.$auth.loggedIn);
+    app.$auth.$storage.watchState('loggedIn', autoGeoloc);
+    store.watch((state, getters) => getters['context/campus'] && getters[`${MODULE}/getPosition`], (position) => {
+      if (app.$auth.loggedIn && store.getters[`${MODULE}/hasPosition`] && store.getters['context/campus']) {
+        const rides = store.state.rides.rides && store.state.rides.rides.length > 0
+          ? store.state.rides.rides : [];
+        app.$io.emit('positionUpdate', {
+          user: app.$auth.user,
+          campus: store.getters['context/campus'],
+          position,
+          rides,
+        });
+      }
+    });
+  }
 }
