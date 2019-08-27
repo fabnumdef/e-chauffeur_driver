@@ -97,18 +97,18 @@ export default {
       isReconnecting: 'isReconnecting',
     }),
   },
-  async asyncData({
-    params, store,
-  }) {
-    await store.dispatch('rides/fetchRides', params.campus);
-    return { campus: params.campus };
-  },
   watch: {
     async isReconnecting() {
       if (!this.isReconnecting) {
         await this.$store.dispatch('rides/fetchRides', this.campus);
       }
     },
+  },
+  async asyncData({
+    params, store,
+  }) {
+    await store.dispatch('rides/fetchRides', params.campus);
+    return { campus: params.campus };
   },
   mounted() {
     this.slideChange();
