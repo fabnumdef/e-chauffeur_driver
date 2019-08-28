@@ -43,8 +43,8 @@ deploy_review:
       --namespace e-chauffeur
       --set image.tag="${CI_COMMIT_REF_SLUG}"
       --set ingress.host="${URL_REVIEW}"
-      --set imageCredentials.username="${CI_REGISTRY_USER}"
-      --set imageCredentials.password="${CI_REGISTRY_PASSWORD}"
+      --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
+      --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
       --set imageCredentials.registry="${CI_REGISTRY}"
       --set env.API_URL="${STAGING_API_URL}"
       --set ingress.issuer="letsencrypt-prod"
@@ -71,8 +71,8 @@ deploy_staging:
       --namespace e-chauffeur
       --set image.tag="${CI_COMMIT_REF_SLUG}"
       --set ingress.host="${STAGING_DOMAIN}"
-      --set imageCredentials.username="${CI_REGISTRY_USER}"
-      --set imageCredentials.password="${CI_REGISTRY_PASSWORD}"
+      --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
+      --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
       --set imageCredentials.registry="${CI_REGISTRY}"
       --set env.API_URL="${STAGING_API_URL}"
       --set ingress.issuer="letsencrypt-prod"
@@ -98,8 +98,8 @@ deploy_prod:
       --namespace e-chauffeur
       --set image.tag="${CI_COMMIT_REF_SLUG}"
       --set ingress.host="${PRODUCTION_DOMAIN}"
-      --set imageCredentials.username="${CI_REGISTRY_USER}"
-      --set imageCredentials.password="${CI_REGISTRY_PASSWORD}"
+      --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
+      --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
       --set imageCredentials.registry="${CI_REGISTRY}"
       --set env.API_URL="${PRODUCTION_API_URL}"
       --set ingress.issuer="letsencrypt-prod"
