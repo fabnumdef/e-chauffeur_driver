@@ -8,7 +8,7 @@ function isNewRide(ride, currentRides) {
   if (!currentRides || currentRides.length === 0) {
     return true;
   }
-  return !currentRides.some(r => r.id === ride.id);
+  return !currentRides.some((r) => r.id === ride.id);
 }
 
 export default async function pushNotification(ride, currentRides) {

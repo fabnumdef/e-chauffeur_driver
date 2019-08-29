@@ -56,9 +56,9 @@ export const mutations = {
 };
 
 export const getters = {
-  ridesToDo: s => s.rides.filter(({ status }) => status !== states.VALIDATED),
-  ridesToAccept: s => s.rides.filter(({ status }) => status === states.VALIDATED),
-  selectedRide: s => s.selectedRide,
+  ridesToDo: (s) => s.rides.filter(({ status }) => status !== states.VALIDATED),
+  ridesToAccept: (s) => s.rides.filter(({ status }) => status === states.VALIDATED),
+  selectedRide: (s) => s.selectedRide,
 };
 
 export const actions = {

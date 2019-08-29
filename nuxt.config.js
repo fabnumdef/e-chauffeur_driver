@@ -26,10 +26,6 @@ module.exports = {
     middleware: ['auth', 'menu'],
   },
 
-  env: {
-    apiUrl: process.env.API_URL,
-  },
-
   css: [
     'swiper/dist/css/swiper.css',
     { src: '~assets/css/main.scss', lang: 'scss' },

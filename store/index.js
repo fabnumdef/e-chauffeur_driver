@@ -17,8 +17,8 @@ export const mutations = {
 };
 
 export const getters = {
-  isReconnecting: s => s.isReconnecting,
-  isMenuOpen: s => s.isMenuOpen,
+  isReconnecting: (s) => s.isReconnecting,
+  isMenuOpen: (s) => s.isMenuOpen,
 };
 
 export const actions = {

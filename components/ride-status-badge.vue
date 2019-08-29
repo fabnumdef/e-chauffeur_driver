@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     ...Object.keys(states)
-      .map(a => ({ [a]: () => states[a] }))
+      .map((a) => ({ [a]: () => states[a] }))
       .reduce((acc, curr) => Object.assign(acc, curr), {}),
   },
 };

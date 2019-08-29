@@ -3,7 +3,7 @@
 const EARTH_RADIUS = 6378137;
 
 function deg2rad(x) {
-  return Math.PI * x / 180;
+  return (Math.PI * x) / 180;
 }
 
 function getDistance([lng1, lat1], [lng2, lat2]) {
@@ -27,7 +27,7 @@ export const mutations = {
 };
 
 export const getters = {
-  getPosition: s => s.position,
-  hasPosition: s => s.position.reduce((a, p) => p && a),
-  computeDistance: s => ([lat, lng]) => getDistance(s.position, [lat, lng]),
+  getPosition: (s) => s.position,
+  hasPosition: (s) => s.position.reduce((a, p) => p && a),
+  computeDistance: (s) => ([lat, lng]) => getDistance(s.position, [lat, lng]),
 };
