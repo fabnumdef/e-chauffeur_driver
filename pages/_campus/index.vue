@@ -1,14 +1,7 @@
 <template>
   <section>
     <header class="container">
-      <div class="columns">
-        <p class="column">
-          <sidemenu-button />
-        </p>
-        <div class="column is-narrow pretitle">
-          {{ 'now'|format_date('full') }}
-        </div>
-      </div>
+      <sidemenu-button />
     </header>
     <reconnecting-hero :show="isReconnecting" />
     <div
@@ -18,7 +11,7 @@
       @slideChange="slideChange"
     >
       <div class="container">
-        <div class="swiper-pagination" />
+            <div class="swiper-pagination" />
       </div>
       <div class="swiper-wrapper">
         <div
@@ -31,6 +24,9 @@
             :class="getColorClass(ride.status)"
           >
             <div class="container">
+              <div class="pretitle" :class="!isToday(ride.start) ? 'is-not-today' : ''">
+                {{ ride.start|format_date('full') }}
+              </div>
               <ride-status
                 :status="ride.status"
                 class="is-pulled-right"
@@ -114,6 +110,13 @@ export default {
     this.slideChange();
   },
   methods: {
+    isToday(date) {
+      const today = new Date();
+      const target = new Date(date);
+      return today.getFullYear() === target.getFullYear()
+      && today.getMonth() === target.getMonth()
+      && today.getDate() === target.getDate();
+    },
     async changeStatus(ride, status) {
       return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride, status);
     },
@@ -179,14 +182,17 @@ export default {
     padding-top: $underNotifCorrection;
     margin-bottom: $underNotifCorrection;
   }
-
-  header {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    .pretitle {
-      text-transform: uppercase;
-      color: $dark-gray;
-      font-weight: bold;
+  @keyframes alarmDate {
+    0% { color: $white; }
+    50% { color: $warning; }
+    100% { color: $white; }
+  }
+  .pretitle {
+    text-transform: uppercase;
+    max-width: 250px;
+    font-weight: bold;
+    &.is-not-today {
+      animation: alarmDate 4s infinite;
     }
   }
 
