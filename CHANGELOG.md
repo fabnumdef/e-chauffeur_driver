@@ -1,5 +1,7 @@
 # Changelog
-## Current
+## Version 1.4.0
+### Features
+* Add warning css when date is not the current day
 ## Version 1.3.1
 ### Fixes
 * Button group in modale was too large.
