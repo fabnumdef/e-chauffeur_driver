@@ -11,7 +11,7 @@
       @slideChange="slideChange"
     >
       <div class="container">
-            <div class="swiper-pagination" />
+        <div class="swiper-pagination" />
       </div>
       <div class="swiper-wrapper">
         <div
@@ -24,7 +24,10 @@
             :class="getColorClass(ride.status)"
           >
             <div class="container">
-              <div class="pretitle" :class="!isToday(ride.start) ? 'is-not-today' : ''">
+              <div
+                class="pretitle"
+                :class="!isToday(ride.start) ? 'is-not-today' : ''"
+              >
                 {{ ride.start|format_date('full') }}
               </div>
               <ride-status
