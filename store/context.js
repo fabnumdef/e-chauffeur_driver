@@ -16,9 +16,9 @@ export const mutations = {
 };
 
 export const getters = {
-  hasCampus: s => s.campus !== null,
-  campus: s => s.campus,
-  accessibleCampuses: s => s.accessibleCampuses,
+  hasCampus: (s) => s.campus !== null,
+  campus: (s) => s.campus,
+  accessibleCampuses: (s) => s.accessibleCampuses,
 };
 
 export const actions = {

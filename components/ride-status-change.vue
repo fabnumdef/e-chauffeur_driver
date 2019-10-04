@@ -93,7 +93,7 @@ export default {
   },
   computed: {
     ...Object.keys(actions)
-      .map(a => ({ [a]: () => actions[a] }))
+      .map((a) => ({ [a]: () => actions[a] }))
       .reduce((acc, curr) => Object.assign(acc, curr), {}),
     transitions() {
       return this.getTransitions(this.status).filter((t) => {
@@ -168,7 +168,7 @@ export default {
         return null;
       }
       return {
-        ...transition.map(t => ({ [t]: this.getText(t) })).reduce((acc, curr) => Object.assign(acc, curr)),
+        ...transition.map((t) => ({ [t]: this.getText(t) })).reduce((acc, curr) => Object.assign(acc, curr)),
       };
     },
     component(transition) {
