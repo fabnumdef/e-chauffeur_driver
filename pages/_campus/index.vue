@@ -102,6 +102,9 @@ export default {
         await this.$store.dispatch('rides/fetchRides', this.campus);
       }
     },
+    rides() {
+      this.slideChange();
+    },
   },
   async asyncData({
     params, store,
