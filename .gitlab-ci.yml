@@ -53,6 +53,7 @@ deploy_review:
       .helm-chart
   except:
     refs:
+      - tags
       - master
       - develop
 
@@ -69,6 +70,7 @@ deploy_staging:
     - helm upgrade
       --install
       --namespace e-chauffeur
+      --set replicaCount=3
       --set image.tag="${CI_COMMIT_SHA}"
       --set ingress.host="${STAGING_DOMAIN}"
       --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
@@ -82,6 +84,9 @@ deploy_staging:
   only:
     refs:
       - develop
+  except:
+    refs:
+      - tags
 
 deploy_prod:
   stage: deploy
@@ -96,6 +101,7 @@ deploy_prod:
     - helm upgrade
       --install
       --namespace e-chauffeur
+      --set replicaCount=3
       --set image.tag="${CI_COMMIT_SHA}"
       --set ingress.host="${PRODUCTION_DOMAIN}"
       --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
@@ -108,5 +114,7 @@ deploy_prod:
       .helm-chart
   only:
     refs:
-      - tags
       - master
+  except:
+    refs:
+      - tags

@@ -1,6 +1,6 @@
 <template>
   <a
-    v-if="selectedRide.phone"
+    v-if="selectedRide.phone && rides.length > 0"
     :href="`tel:${selectedRide.phone}`"
     class="button is-pulled-right phone-button"
   >
@@ -12,7 +12,10 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters({ selectedRide: 'rides/selectedRide' }),
+    ...mapGetters({
+      selectedRide: 'rides/selectedRide',
+      rides: 'rides/ridesToDo',
+    }),
   },
 };
 </script>
