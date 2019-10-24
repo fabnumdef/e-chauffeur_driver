@@ -1,4 +1,13 @@
 # Changelog
+## Current
+### Features
+### Fix
+## Version 1.4.2
+### Features
+* Improve reliability, k8s side
+### Fix
+* Fix `navigator` issue, SSR side
+* Fix hiding phone button after the end of the ride
 ## Version 1.4.0
 ### Features
 * Add warning css when date is not the current day
