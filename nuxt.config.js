@@ -17,7 +17,7 @@ module.exports = {
     },
     plugins: [
       '~/plugins/geolocation.js',
-      '~/plugins/socket.js',
+      { src: '~/plugins/socket.js', ssr: false },
     ],
     scopeKey: pkg.name,
   },
