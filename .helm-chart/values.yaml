@@ -14,6 +14,7 @@ nameOverride: ""
 fullnameOverride: ""
 env:
   API_URL: api.localhost
+  VAPID_PUBLIC_KEY: vapid.localhost
 imageCredentials:
   name: e-chauffeur-driver
   registry: registry.gitlab.com

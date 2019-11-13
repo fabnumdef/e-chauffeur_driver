@@ -47,6 +47,7 @@ deploy_review:
       --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
       --set imageCredentials.registry="${CI_REGISTRY}"
       --set env.API_URL="${STAGING_API_URL}"
+      --set env.VAPID_PUBLIC_KEY="${STAGING_VAPID_PUBLIC_KEY}"
       --set ingress.issuer="letsencrypt-prod"
       --wait
       e-chauffeur-driver-${CI_COMMIT_REF_SLUG}
@@ -77,6 +78,7 @@ deploy_staging:
       --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
       --set imageCredentials.registry="${CI_REGISTRY}"
       --set env.API_URL="${STAGING_API_URL}"
+      --set env.VAPID_PUBLIC_KEY="${STAGING_VAPID_PUBLIC_KEY}"
       --set ingress.issuer="letsencrypt-prod"
       --wait
       e-chauffeur-driver-${CI_COMMIT_REF_SLUG}
@@ -108,6 +110,7 @@ deploy_prod:
       --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
       --set imageCredentials.registry="${CI_REGISTRY}"
       --set env.API_URL="${PRODUCTION_API_URL}"
+      --set env.VAPID_PUBLIC_KEY="${PRODUCTION_VAPID_PUBLIC_KEY}"
       --set ingress.issuer="letsencrypt-prod"
       --wait
       e-chauffeur-driver-${CI_COMMIT_REF_SLUG}
