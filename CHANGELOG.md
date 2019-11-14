@@ -1,6 +1,7 @@
 # Changelog
 ## Current
 ### Features
+* Add push notifications
 ### Fix
 ## Version 1.4.2
 ### Features
