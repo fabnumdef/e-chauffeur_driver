@@ -48,12 +48,10 @@
         label="Mot de passe"
         field-id="password"
       >
-        <input
+        <ec-password
           id="password"
           v-model="user.password"
-          type="password"
-          class="input"
-        >
+        />
       </ec-field>
       <button
         type="submit"
@@ -68,6 +66,7 @@
 <script>
 import sidemenuButton from '../components/sidemenu-button';
 import ecField from '~/components/form/field';
+import ecPassword from '~/components/form/password';
 
 const FIELDS = 'id,email,name';
 
@@ -75,6 +74,7 @@ export default {
   components: {
     sidemenuButton,
     ecField,
+    ecPassword,
   },
   async asyncData({ $api }) {
     const { data: user } = await $api.jwt.getUser(FIELDS);
