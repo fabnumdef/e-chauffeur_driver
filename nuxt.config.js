@@ -52,6 +52,7 @@ module.exports = {
         withAuth: true,
         authPlugins: [
           'auth-renew',
+          'user-expiration',
         ],
       },
     ],
