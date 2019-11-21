@@ -52,6 +52,7 @@ export default async function ({ app }) {
   try {
     if (process.client) {
       if (checkSw() && checkPermission() && await window.$workbox) {
+        autoSubscribe(app.$auth.loggedIn);
         app.$auth.$storage.watchState('loggedIn', autoSubscribe);
       } else {
         console.log('Notifications not available or denied');
