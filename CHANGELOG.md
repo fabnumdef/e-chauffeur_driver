@@ -3,6 +3,7 @@
 ### Features
 * Add new component to enforce password strength
 * Add explicit error messages on 
+* Add push notifications
 ### Fix
 ## Version 1.4.2
 ### Features

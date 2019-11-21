@@ -25,6 +25,8 @@ spec:
           env:
             - name: API_URL
               value: "{{ .Values.env.API_URL }}"
+            - name: VAPID_PUBLIC_KEY
+              value: "{{ .Values.env.VAPID_PUBLIC_KEY }}"
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
