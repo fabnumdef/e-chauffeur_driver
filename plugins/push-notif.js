@@ -24,7 +24,7 @@ export default async function ({ app }) {
     return permission !== 'denied';
   };
 
-  const handleSubscription = async (subscription) => app.$api.users.subscribeDevice('5c484b5c05be0932f29fbd16',
+  const handleSubscription = async (subscription) => app.$api.users.subscribeDevice(app.$auth.user.id,
     subscription);
 
   const checkSubscription = async (registration) => {
@@ -52,7 +52,6 @@ export default async function ({ app }) {
   try {
     if (process.client) {
       if (checkSw() && checkPermission() && await window.$workbox) {
-        autoSubscribe(app.$auth.loggedIn);
         app.$auth.$storage.watchState('loggedIn', autoSubscribe);
       } else {
         console.log('Notifications not available or denied');

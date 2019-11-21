@@ -5,6 +5,7 @@
 * Add explicit error messages on 
 * Add push notifications
 ### Fix
+* Fix push notifications
 ## Version 1.4.2
 ### Features
 * Improve reliability, k8s side
