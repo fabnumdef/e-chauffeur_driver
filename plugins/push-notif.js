@@ -55,10 +55,12 @@ export default async function ({ app }) {
         autoSubscribe(app.$auth.loggedIn);
         app.$auth.$storage.watchState('loggedIn', autoSubscribe);
       } else {
-        console.log('Notifications not available or denied');
+        // eslint-disable-next-line no-console
+        console.error('Notifications not available or denied');
       }
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error('Service Worker failed: ', e);
   }
 }
