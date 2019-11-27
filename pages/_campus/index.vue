@@ -89,6 +89,12 @@ export default {
     ridesToAccept,
     reconnectingHero,
   },
+  async asyncData({
+    params, store,
+  }) {
+    await store.dispatch('rides/fetchRides', params.campus);
+    return { campus: params.campus };
+  },
   computed: {
     actions: () => actions,
     ...mapGetters({
@@ -105,12 +111,6 @@ export default {
     rides() {
       this.slideChange();
     },
-  },
-  async asyncData({
-    params, store,
-  }) {
-    await store.dispatch('rides/fetchRides', params.campus);
-    return { campus: params.campus };
   },
   mounted() {
     this.slideChange();

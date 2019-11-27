@@ -35,13 +35,13 @@ export default {
   components: {
     sidemenuButton,
   },
+  async asyncData({ store }) {
+    await store.dispatch('context/fetchAccessibleCampuses');
+  },
   computed: {
     ...mapGetters({
       campuses: 'context/accessibleCampuses',
     }),
-  },
-  async asyncData({ store }) {
-    await store.dispatch('context/fetchAccessibleCampuses');
   },
   mounted() {
     if (this.campuses && this.campuses.length === 1) {
