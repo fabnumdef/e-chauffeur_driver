@@ -28,7 +28,7 @@ service:
 ingress:
   enabled: true
   host: driver.localhost
-  issuer: letsencrypt-staging
+  issuer: self-signing
 
 resources:
   limits:
