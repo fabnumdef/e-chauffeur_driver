@@ -1,7 +1,5 @@
 {
-  "name": "taxi-app",
-  "version": "1.4.2",
-  "author": "Gaël",
+  "name": "e-chauffeur_driver",
   "private": true,
   "scripts": {
     "dev": "nuxt",
