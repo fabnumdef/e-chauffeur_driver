@@ -28,7 +28,7 @@ build:
 
 deploy_review:
   stage: deploy
-  image: dtzar/helm-kubectl:3.0.1
+  image: dtzar/helm-kubectl:3.0.2
   before_script:
     - mkdir -p `dirname $KUBECONFIG`
     - echo ${STAGING_KUBECONFIG} | base64 -d > $KUBECONFIG
@@ -43,6 +43,7 @@ deploy_review:
       --set imageCredentials.registry="${CI_REGISTRY}"
       --set env.API_URL="${STAGING_API_URL}"
       --set env.VAPID_PUBLIC_KEY="${STAGING_VAPID_PUBLIC_KEY}"
+      --set monitoring.alert.enabled="false"
       --wait
       driver-${CI_COMMIT_REF_SLUG}
       .helm-chart
@@ -54,7 +55,7 @@ deploy_review:
 
 deploy_staging:
   stage: deploy
-  image: dtzar/helm-kubectl:3.0.1
+  image: dtzar/helm-kubectl:3.0.2
   before_script:
     - mkdir -p `dirname $KUBECONFIG`
     - echo ${STAGING_KUBECONFIG} | base64 -d > $KUBECONFIG
@@ -71,6 +72,7 @@ deploy_staging:
       --set env.API_URL="${STAGING_API_URL}"
       --set env.VAPID_PUBLIC_KEY="${STAGING_VAPID_PUBLIC_KEY}"
       --set ingress.issuer="letsencrypt-prod"
+      --set monitoring.alert.minimumPod=2
       --wait
       driver-staging
       .helm-chart
@@ -83,7 +85,7 @@ deploy_staging:
 
 deploy_prod:
   stage: deploy
-  image: dtzar/helm-kubectl:3.0.1
+  image: dtzar/helm-kubectl:3.0.2
   before_script:
     - mkdir -p `dirname $KUBECONFIG`
     - echo ${PRODUCTION_KUBECONFIG} | base64 -d > $KUBECONFIG
@@ -100,6 +102,7 @@ deploy_prod:
       --set env.API_URL="${PRODUCTION_API_URL}"
       --set env.VAPID_PUBLIC_KEY="${PRODUCTION_VAPID_PUBLIC_KEY}"
       --set ingress.issuer="letsencrypt-prod"
+      --set monitoring.alert.minimumPod=3
       --wait
       driver
       .helm-chart
