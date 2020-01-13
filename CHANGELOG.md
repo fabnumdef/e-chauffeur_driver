@@ -2,6 +2,15 @@
 ## Current
 ### Features
 ### Fix
+## Version 1.4.4
+### Features
+* Add new component to enforce password strength
+* Add explicit error messages on 
+* Add push notifications
+* Export dashboard and monitoring on deploy
+### Fix
+* Fix infosec issue with X-Frame header
+* Fix push notifications
 ## Version 1.4.2
 ### Features
 * Improve reliability, k8s side

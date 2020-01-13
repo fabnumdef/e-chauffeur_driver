@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import sidemenuMenu from '../components/sidemenu-menu';
+import sidemenuMenu from '~/components/sidemenu-menu.vue';
 
 export default {
   components: {

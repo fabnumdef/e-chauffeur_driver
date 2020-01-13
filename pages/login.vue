@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import ecField from '~/components/form/field';
+import ecField from '~/components/form/field.vue';
 
 export default {
   layout: 'not-logged',
@@ -68,9 +68,27 @@ export default {
         await this.$auth.login({ data });
         this.$router.push('/');
         this.$toast.success('Bienvenue !');
-      } catch (e) {
-        this.$toast.error('Une erreur est survenue, merci de vérifier votre email et mot de passe. '
-          + 'Contactez le régulateur pour réinitialiser le mot de passe.');
+      } catch ({ response: { status }, message }) {
+        switch (status) {
+          case 404:
+            this.$toast.error('Impossible de se connecter, l\'utilisateur n\'existe pas. '
+              + 'Merci de vérifier votre identifiant.\n'
+              + 'Si le problème persiste, contactez le régulateur pour confirmer votre identifiant.');
+            break;
+          case 403:
+            this.$toast.error('Impossible de se connecter, le mot de passe est incorrect. '
+              + 'Merci de retaper votre mot de passe.\n'
+              + 'Si le problème persiste, contactez le régulateur pour réinitialiser votre mot de passe.');
+            this.user.password = null;
+            break;
+          case 401:
+            this.$toast.error('Impossible de se connecter, le mot de passe a expiré. '
+              + 'Contactez le régulateur pour le réinitialiser.');
+            break;
+          default:
+            this.$toast.error('Une erreur est survenue, merci de vérifier votre email et mot de passe. '
+              + 'Contactez le régulateur pour réinitialiser le mot de passe.');
+        }
       }
     },
   },

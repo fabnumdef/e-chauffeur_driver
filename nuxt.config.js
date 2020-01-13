@@ -18,6 +18,7 @@ module.exports = {
     plugins: [
       '~/plugins/geolocation.js',
       { src: '~/plugins/socket.js', ssr: false },
+      { src: '~/plugins/push-notif.js', ssr: false },
     ],
     scopeKey: pkg.name,
   },
@@ -51,6 +52,7 @@ module.exports = {
         withAuth: true,
         authPlugins: [
           'auth-renew',
+          'user-expiration',
         ],
       },
     ],
@@ -80,5 +82,10 @@ module.exports = {
     name: 'e-Chauffeur - Chauffeur',
     short_name: 'e-Chauffeur',
     description: 'Application chauffeur',
+  },
+  workbox: {
+    importScripts: [
+      'push.js',
+    ],
   },
 };
