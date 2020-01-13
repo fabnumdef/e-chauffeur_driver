@@ -1,6 +1,9 @@
 # Changelog
 ## Current
 ### Features
+### Fix
+## Version 1.4.4
+### Features
 * Add new component to enforce password strength
 * Add explicit error messages on 
 * Add push notifications

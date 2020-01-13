@@ -64,9 +64,9 @@
 </template>
 
 <script>
-import sidemenuButton from '../components/sidemenu-button';
-import ecField from '~/components/form/field';
-import ecPassword from '~/components/form/password';
+import sidemenuButton from '../components/sidemenu-button.vue';
+import ecField from '~/components/form/field.vue';
+import ecPassword from '~/components/form/password.vue';
 
 const FIELDS = 'id,email,name';
 
