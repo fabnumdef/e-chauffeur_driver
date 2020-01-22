@@ -78,7 +78,7 @@ import rideCard from '~/components/ride-card.vue';
 import statusChange from '~/components/ride-status-change.vue';
 import ridesToAccept from '~/components/rides-to-accept.vue';
 import reconnectingHero from '~/components/reconnecting-hero.vue';
-import sidemenuButton from '../../components/sidemenu-button';
+import sidemenuButton from '../../components/sidemenu-button.vue';
 
 export default {
   components: {
@@ -114,6 +114,10 @@ export default {
   },
   mounted() {
     this.slideChange();
+    this.$socket.emit('driverConnected', {
+      driverId: this.$auth.user.id,
+      campusId: this.campus,
+    });
   },
   methods: {
     isToday(date) {

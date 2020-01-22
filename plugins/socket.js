@@ -9,6 +9,7 @@ export default function ({ app, store }) {
   ioInstance.on('reconnecting', () => {
     store.dispatch('reconnecting', true);
   });
+
   const autoConnect = (isLogged) => {
     if (isLogged) {
       ioInstance.open();
