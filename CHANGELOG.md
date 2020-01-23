@@ -1,6 +1,7 @@
 # Changelog
 ## Current
 ### Features
+* Export metrics for prometheus
 ### Fix
 ## Version 1.4.4
 ### Features
