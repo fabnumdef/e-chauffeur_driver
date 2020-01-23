@@ -556,7 +556,7 @@ data:
           }
         }
       ],
-      "tags": [],
+      "tags": ["e-Chauffeur", "Driver", "Nuxt", "NodeJS", "helm"],
       "templating": {
         "list": []
       },
