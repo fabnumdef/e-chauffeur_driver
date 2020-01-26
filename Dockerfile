@@ -22,6 +22,7 @@ COPY . /usr/src/app/
 RUN npm run build
 
 EXPOSE 3000
+EXPOSE 9091
 ENV HOST=0.0.0.0
 ENV PORT=3000
 
