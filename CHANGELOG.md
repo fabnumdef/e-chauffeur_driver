@@ -2,6 +2,7 @@
 ## Current
 ### Features
 * Export metrics for prometheus
+* Add automatically trim
 ### Fix
 ## Version 1.4.4
 ### Features
