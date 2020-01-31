@@ -1,10 +1,16 @@
 # Changelog
 ## Current
 ### Features
+* Export metrics for prometheus
+* Add automatically trim
+* Add socket connection event on campus selection
+### Fix
+## Version 1.4.4
+### Features
 * Add new component to enforce password strength
 * Add explicit error messages on 
 * Add push notifications
-* Add socket connection event on campus selection
+* Export dashboard and monitoring on deploy
 ### Fix
 * Fix infosec issue with X-Frame header
 * Fix push notifications

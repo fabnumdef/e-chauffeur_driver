@@ -40,7 +40,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
-import sidemenuButton from './sidemenu-button';
+import sidemenuButton from './sidemenu-button.vue';
 
 export default {
   components: {

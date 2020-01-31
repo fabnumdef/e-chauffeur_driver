@@ -14,7 +14,7 @@
       >
         <input
           id="email"
-          v-model="user.email"
+          v-model.trim="user.email"
           required="required"
           class="input"
           type="email"
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import ecField from '~/components/form/field';
+import ecField from '~/components/form/field.vue';
 
 export default {
   layout: 'not-logged',

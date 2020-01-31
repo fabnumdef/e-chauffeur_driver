@@ -21,36 +21,31 @@ build:
     entrypoint: [""]
   script:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - cat package.json
     - /kaniko/executor
       --context $CI_PROJECT_DIR
       --dockerfile $CI_PROJECT_DIR/Dockerfile
       --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-      --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
 deploy_review:
   stage: deploy
-  image: dtzar/helm-kubectl
+  image: dtzar/helm-kubectl:3.0.2
   before_script:
-    - apk upgrade --update-cache --available && apk add openssl && rm -rf /var/cache/apk/*
-    - curl -L https://git.io/get_helm.sh | bash
     - mkdir -p `dirname $KUBECONFIG`
     - echo ${STAGING_KUBECONFIG} | base64 -d > $KUBECONFIG
-    - "helm init --upgrade --service-account tiller --force-upgrade --override spec.selector.matchLabels.'name'='tiller',spec.selector.matchLabels.'app'='helm' --output yaml | sed 's@apiVersion: extensions/v1beta1@apiVersion: apps/v1@' | kubectl apply -f -"
   script:
     - helm upgrade
       --install
       --namespace e-chauffeur
-      --set image.tag="${CI_COMMIT_SHA}"
+      --set image.tag="${CI_COMMIT_REF_SLUG}"
       --set ingress.host="${URL_REVIEW}"
       --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
       --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
       --set imageCredentials.registry="${CI_REGISTRY}"
       --set env.API_URL="${STAGING_API_URL}"
       --set env.VAPID_PUBLIC_KEY="${STAGING_VAPID_PUBLIC_KEY}"
-      --set ingress.issuer="letsencrypt-prod"
+      --set monitoring.alert.enabled="false"
       --wait
-      e-chauffeur-driver-${CI_COMMIT_REF_SLUG}
+      driver-${CI_COMMIT_REF_SLUG}
       .helm-chart
   except:
     refs:
@@ -60,19 +55,16 @@ deploy_review:
 
 deploy_staging:
   stage: deploy
-  image: dtzar/helm-kubectl
+  image: dtzar/helm-kubectl:3.0.2
   before_script:
-    - apk upgrade --update-cache --available && apk add openssl && rm -rf /var/cache/apk/*
-    - curl -L https://git.io/get_helm.sh | bash
     - mkdir -p `dirname $KUBECONFIG`
     - echo ${STAGING_KUBECONFIG} | base64 -d > $KUBECONFIG
-    - "helm init --upgrade --service-account tiller --force-upgrade --override spec.selector.matchLabels.'name'='tiller',spec.selector.matchLabels.'app'='helm' --output yaml | sed 's@apiVersion: extensions/v1beta1@apiVersion: apps/v1@' | kubectl apply -f -"
   script:
     - helm upgrade
       --install
       --namespace e-chauffeur
       --set replicaCount=3
-      --set image.tag="${CI_COMMIT_SHA}"
+      --set image.tag="${CI_COMMIT_REF_SLUG}"
       --set ingress.host="${STAGING_DOMAIN}"
       --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
       --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
@@ -80,8 +72,9 @@ deploy_staging:
       --set env.API_URL="${STAGING_API_URL}"
       --set env.VAPID_PUBLIC_KEY="${STAGING_VAPID_PUBLIC_KEY}"
       --set ingress.issuer="letsencrypt-prod"
+      --set monitoring.alert.minimumPod=2
       --wait
-      e-chauffeur-driver-${CI_COMMIT_REF_SLUG}
+      driver-staging
       .helm-chart
   only:
     refs:
@@ -92,19 +85,16 @@ deploy_staging:
 
 deploy_prod:
   stage: deploy
-  image: dtzar/helm-kubectl
+  image: dtzar/helm-kubectl:3.0.2
   before_script:
-    - apk upgrade --update-cache --available && apk add openssl && rm -rf /var/cache/apk/*
-    - curl -L https://git.io/get_helm.sh | bash
     - mkdir -p `dirname $KUBECONFIG`
     - echo ${PRODUCTION_KUBECONFIG} | base64 -d > $KUBECONFIG
-    - helm init --upgrade --service-account tiller --force-upgrade
   script:
     - helm upgrade
       --install
       --namespace e-chauffeur
       --set replicaCount=3
-      --set image.tag="${CI_COMMIT_SHA}"
+      --set image.tag="${CI_COMMIT_REF_SLUG}"
       --set ingress.host="${PRODUCTION_DOMAIN}"
       --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
       --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
@@ -112,12 +102,10 @@ deploy_prod:
       --set env.API_URL="${PRODUCTION_API_URL}"
       --set env.VAPID_PUBLIC_KEY="${PRODUCTION_VAPID_PUBLIC_KEY}"
       --set ingress.issuer="letsencrypt-prod"
+      --set monitoring.alert.minimumPod=3
       --wait
-      e-chauffeur-driver-${CI_COMMIT_REF_SLUG}
+      driver
       .helm-chart
   only:
-    refs:
-      - master
-  except:
     refs:
       - tags

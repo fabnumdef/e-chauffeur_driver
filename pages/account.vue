@@ -27,7 +27,7 @@
       >
         <input
           id="email"
-          v-model="user.email"
+          v-model.trim="user.email"
           type="email"
           disabled
           class="input"
@@ -39,7 +39,7 @@
       >
         <input
           id="name"
-          v-model="user.name"
+          v-model.trim="user.name"
           type="text"
           class="input"
         >
@@ -64,9 +64,9 @@
 </template>
 
 <script>
-import sidemenuButton from '../components/sidemenu-button';
-import ecField from '~/components/form/field';
-import ecPassword from '~/components/form/password';
+import sidemenuButton from '../components/sidemenu-button.vue';
+import ecField from '~/components/form/field.vue';
+import ecPassword from '~/components/form/password.vue';
 
 const FIELDS = 'id,email,name';
 
