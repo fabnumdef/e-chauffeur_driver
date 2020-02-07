@@ -114,6 +114,10 @@ export default {
   },
   mounted() {
     this.slideChange();
+    this.$socket.emit('driverConnected', {
+      driverId: this.$auth.user.id,
+      campusId: this.campus,
+    });
   },
   methods: {
     isToday(date) {

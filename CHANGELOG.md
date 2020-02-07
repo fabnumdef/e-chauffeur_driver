@@ -3,6 +3,7 @@
 ### Features
 * Export metrics for prometheus
 * Add automatically trim
+* Add socket connection event on campus selection
 ### Fix
 ## Version 1.4.4
 ### Features
