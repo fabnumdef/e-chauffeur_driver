@@ -5,6 +5,7 @@
 * Add automatically trim
 * Add socket connection event on campus selection
 ### Fix
+* Fix container restart
 ## Version 1.4.4
 ### Features
 * Add new component to enforce password strength

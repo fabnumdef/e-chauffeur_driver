@@ -1578,20 +1578,20 @@ data:
           "steppedLine": false,
           "targets": [
           {
-            "expr": "sum by (container) (irate(container_cpu_usage_seconds_total{job=\"kubelet\", namespace=\"{{ .Values.namespace }}\", image!=\"\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"}[4m]))",
+            "expr": "sum by (pod) (irate(container_cpu_usage_seconds_total{job=\"kubelet\", namespace=\"{{ .Values.namespace }}\", image!=\"\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"}[4m]))",
             "format": "time_series",
-            "legendFormat": "{{`Current: {{ container }}`}}",
+            "legendFormat": "{{`Current: {{ pod }}`}}",
             "refId": "A"
           },
           {
-            "expr": "sum by(container) (kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=\"{{ .Values.namespace }}\", resource=\"cpu\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
+            "expr": "avg by(container) (kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=\"{{ .Values.namespace }}\", resource=\"cpu\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
             "format": "time_series",
-            "legendFormat": "{{`Requested: {{ container }}`}}",
+            "legendFormat": "{{`Requested`}}",
             "refId": "B"
           },
           {
-            "expr": "sum by(container) (kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=\"{{ .Values.namespace }}\", resource=\"cpu\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
-            "legendFormat": "{{`Limit: {{ container }}`}}",
+            "expr": "avg by(container) (kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=\"{{ .Values.namespace }}\", resource=\"cpu\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
+            "legendFormat": "{{`Limit`}}",
             "refId": "C"
           }
           ],
@@ -1677,26 +1677,26 @@ data:
           "steppedLine": false,
           "targets": [
           {
-            "expr": "sum by (container) (container_memory_usage_bytes{job=\"kubelet\", namespace=\"{{ .Values.namespace }}\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
+            "expr": "sum by (pod) (container_memory_usage_bytes{job=\"kubelet\", namespace=\"{{ .Values.namespace }}\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
             "format": "time_series",
-            "legendFormat": "{{`Current: {{ container }}`}}",
+            "legendFormat": "{{`Current: {{ pod }}`}}",
             "refId": "A"
           },
           {
-            "expr": "sum by(container) (kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=\"{{ .Values.namespace }}\", resource=\"memory\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
-            "legendFormat": "{{`Requested: {{ container }}`}}",
+            "expr": "avg by(container) (kube_pod_container_resource_requests{job=\"kube-state-metrics\", namespace=\"{{ .Values.namespace }}\", resource=\"memory\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
+            "legendFormat": "Requested",
             "refId": "B"
           },
           {
-            "expr": "sum by(container) (kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=\"{{ .Values.namespace }}\", resource=\"memory\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
+            "expr": "avg by(container) (kube_pod_container_resource_limits{job=\"kube-state-metrics\", namespace=\"{{ .Values.namespace }}\", resource=\"memory\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
             "hide": false,
-            "legendFormat": "{{`Limit: {{ container }}`}}",
+            "legendFormat": "Limit",
             "refId": "C"
           },
           {
-            "expr": "sum by(container) (container_memory_cache{job=\"kubelet\", namespace=\"{{ .Values.namespace }}\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
+            "expr": "sum by(pod) (container_memory_cache{job=\"kubelet\", namespace=\"{{ .Values.namespace }}\", pod=~\"{{ $fullName }}.+\", container=\"{{ .Chart.Name }}\"})",
             "hide": false,
-            "legendFormat": "{{`Cache: {{ container }}`}}",
+            "legendFormat": "{{`Cache: {{ pod }}`}}",
             "refId": "D"
           }
           ],
