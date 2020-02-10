@@ -1,13 +1,8 @@
 <template>
-  <div class="container">
-    <div class="columns">
-      <p class="column">
-        <sidemenu-button />
-      </p>
-      <div class="column is-narrow pretitle">
-        Sélection du campus
-      </div>
-    </div>
+  <main>
+    <h1 class="column is-narrow pretitle">
+      Sélection du campus
+    </h1>
     <ul
       v-if="campuses"
       class="columns"
@@ -25,16 +20,13 @@
         </nuxt-link>
       </li>
     </ul>
-  </div>
+  </main>
 </template>
+
 <script>
 import { mapGetters } from 'vuex';
-import sidemenuButton from '~/components/sidemenu-button.vue';
 
 export default {
-  components: {
-    sidemenuButton,
-  },
   async asyncData({ store }) {
     await store.dispatch('context/fetchAccessibleCampuses');
   },
@@ -53,7 +45,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
-    margin-top: 10px;
-  }
+
 </style>

@@ -1,104 +1,30 @@
 <template>
-  <section>
-    <header class="container">
-      <sidemenu-button />
-    </header>
+  <div>
     <reconnecting-hero :show="isReconnecting" />
-    <div
-      v-swiper:ridesSwipe="{pagination: {
-        el: '.swiper-pagination'
-      }}"
-      @slideChange="slideChange"
-    >
-      <div class="container">
-        <div class="swiper-pagination" />
-      </div>
-      <div class="swiper-wrapper">
-        <div
-          v-for="ride in rides"
-          :key="ride.id"
-          class="swiper-slide"
-        >
-          <div
-            class="notification"
-            :class="getColorClass(ride.status)"
-          >
-            <div class="container">
-              <div
-                class="pretitle"
-                :class="!isToday(ride.start) ? 'is-not-today' : ''"
-              >
-                {{ ride.start|format_date('full') }}
-              </div>
-              <ride-status
-                :status="ride.status"
-                class="is-pulled-right"
-              />
-              <p class="poi-label">
-                Prochaine destination
-              </p>
-              <p class="poi">
-                {{ getNextStopLabel(ride) }}
-              </p>
-              <status-change
-                :status="ride.status"
-                no-cancel
-                @change="changeStatus(ride, $event)"
-              />
-            </div>
-          </div>
-
-          <ride-card
-            class="container"
-            :ride="ride"
-            cancel-only
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      v-if="rides.length < 1"
-      class="notification is-success"
-    >
-      <div class="container">
-        <p class="poi">
-          Pas de courses
-        </p>
-      </div>
-    </div>
-    <rides-to-accept :campus="campus" />
-  </section>
+    <nuxt-child />
+    <!--  Insert call buttons here conditionnally  -->
+  </div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import * as states from '@fabnumdef/e-chauffeur_lib-vue/api/status/states';
-import * as actions from '@fabnumdef/e-chauffeur_lib-vue/api/status/transitions';
-import rideStatus from '~/components/ride-status-badge.vue';
-import rideCard from '~/components/ride-card.vue';
-import statusChange from '~/components/ride-status-change.vue';
-import ridesToAccept from '~/components/rides-to-accept.vue';
 import reconnectingHero from '~/components/reconnecting-hero.vue';
-import sidemenuButton from '~/components/sidemenu-button.vue';
 
 export default {
   components: {
-    sidemenuButton,
-    rideCard,
-    rideStatus,
-    statusChange,
-    ridesToAccept,
     reconnectingHero,
   },
   async asyncData({
-    params, store,
+    params: { campus }, store,
   }) {
-    await store.dispatch('rides/fetchRides', params.campus);
-    return { campus: params.campus };
+    await store.dispatch('rides/fetchRides', campus);
+    return { campus };
+  },
+  mounted() {
+    // @todo redirect depending on steps status
   },
   computed: {
-    actions: () => actions,
     ...mapGetters({
-      rides: 'rides/ridesToDo',
+      // @todo getSteps
       isReconnecting: 'isReconnecting',
     }),
   },
@@ -106,53 +32,6 @@ export default {
     async isReconnecting() {
       if (!this.isReconnecting) {
         await this.$store.dispatch('rides/fetchRides', this.campus);
-      }
-    },
-    rides() {
-      this.slideChange();
-    },
-  },
-  mounted() {
-    this.slideChange();
-  },
-  methods: {
-    isToday(date) {
-      const today = new Date();
-      const target = new Date(date);
-      return today.getFullYear() === target.getFullYear()
-      && today.getMonth() === target.getMonth()
-      && today.getDate() === target.getDate();
-    },
-    async changeStatus(ride, status) {
-      return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride, status);
-    },
-    slideChange() {
-      this.$store.dispatch('rides/selectRide', this.ridesSwipe.activeIndex);
-    },
-    getColorClass(status) {
-      switch (status) {
-        case states.ACCEPTED:
-          return 'is-gray';
-        case states.STARTED:
-        case states.WAITING:
-          return 'is-warning';
-        case states.IN_PROGRESS:
-        case states.DELIVERED:
-          return 'is-primary';
-        default:
-          return '';
-      }
-    },
-    getNextStopLabel({ status, departure, arrival }) {
-      switch (status) {
-        case states.IN_PROGRESS:
-        case states.DELIVERED:
-          return arrival.label;
-        case states.ACCEPTED:
-        case states.STARTED:
-        case states.WAITING:
-        default:
-          return departure.label;
       }
     },
   },

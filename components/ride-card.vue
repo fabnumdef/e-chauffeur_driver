@@ -57,7 +57,6 @@ export default {
   components: {
     ecField,
     statusChange,
-
   },
   props: {
     ride: {

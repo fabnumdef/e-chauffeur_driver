@@ -76,6 +76,7 @@ module.exports = {
           'faSpinner',
           'faBars',
           'faCar',
+          'faChevronRight',
         ],
       },
     ],
