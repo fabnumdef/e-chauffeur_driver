@@ -1,7 +1,7 @@
 <template>
   <a
-    v-if="selectedRide.phone && rides.length > 0"
-    :href="`tel:${selectedRide.phone}`"
+    v-if="phone && steps.length > 0"
+    :href="`tel:${phone}`"
     class="button is-pulled-right phone-button"
   >
     <fa-icon icon="phone" />
@@ -13,24 +13,27 @@ import { mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapGetters({
-      selectedRide: 'rides/selectedRide',
-      rides: 'rides/ridesToDo',
+      steps: 'rides/getSteps',
     }),
+    phone() {
+      // eslint-disable-next-line no-unused-vars
+      const [_, current] = this.steps;
+      return current.phone;
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
   @import "~assets/css/head";
   .phone-button {
-     position: fixed;
-     bottom: 10px;
-     right: 65px;
-     z-index: 3;
-     background: $green;
+    position: fixed;
+    bottom: 4em;
+    right: 4em;
+    background: $green;
     color: findColorInvert($primary);
     border-radius: 100%;
     padding: $size-small;
-    border: none;
+    border: 1px solid $white;
     font-size: $size-medium;
     box-sizing: border-box;
    }

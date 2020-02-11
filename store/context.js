@@ -38,4 +38,5 @@ export const actions = {
     }
     return g.accessibleCampuses;
   },
+
 };

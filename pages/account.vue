@@ -1,15 +1,5 @@
 <template>
   <section>
-    <header class="container">
-      <div class="columns">
-        <p class="column">
-          <sidemenu-button />
-        </p>
-        <div class="column is-narrow pretitle">
-          Mon compte
-        </div>
-      </div>
-    </header>
     <div
       class="notification is-primary"
     >
@@ -64,7 +54,6 @@
 </template>
 
 <script>
-import sidemenuButton from '../components/sidemenu-button.vue';
 import ecField from '~/components/form/field.vue';
 import ecPassword from '~/components/form/password.vue';
 
@@ -72,7 +61,6 @@ const FIELDS = 'id,email,name';
 
 export default {
   components: {
-    sidemenuButton,
     ecField,
     ecPassword,
   },

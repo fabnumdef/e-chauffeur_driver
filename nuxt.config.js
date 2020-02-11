@@ -16,9 +16,9 @@ module.exports = {
       home: '/',
     },
     plugins: [
-      '~/plugins/geolocation.js',
-      { src: '~/plugins/socket.js', ssr: false },
-      { src: '~/plugins/push-notif.js', ssr: false },
+      { src: '~/plugins/geolocation.js', client: 'only' },
+      { src: '~/plugins/socket.js', client: 'only' },
+      { src: '~/plugins/push-notif.js', client: 'only' },
     ],
     scopeKey: pkg.name,
   },
@@ -51,8 +51,8 @@ module.exports = {
         },
         withAuth: true,
         authPlugins: [
-          'auth-renew',
-          'user-expiration',
+          { src: 'auth-renew', mode: 'client' },
+          { src: 'user-expiration', mode: 'client' },
         ],
         prometheus: {
           host: '0.0.0.0',
@@ -77,6 +77,8 @@ module.exports = {
           'faBars',
           'faCar',
           'faChevronRight',
+          'faHistory',
+          'faUserCircle',
         ],
       },
     ],

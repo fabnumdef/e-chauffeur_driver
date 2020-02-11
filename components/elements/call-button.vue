@@ -20,14 +20,14 @@ export default {
   @import "~assets/css/head";
   .phone-button {
      position: fixed;
-     bottom: 10px;
-     right: 10px;
+    bottom: 4em;
+    right: 1em;
      z-index: 3;
      background: $primary;
     color: findColorInvert($primary);
+    border: 1px solid $white;
     border-radius: 100%;
     padding: $size-small;
-    border: none;
     font-size: $size-medium;
     box-sizing: border-box;
    }

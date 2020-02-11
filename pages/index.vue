@@ -13,7 +13,7 @@
         class="column"
       >
         <nuxt-link
-          :to="{name: 'campus', params: { campus: campus.id }}"
+          :to="{name: `campus-${driverStatus}`, params: { campus: campus.id }}"
           class="box"
         >
           {{ campus.name }}
@@ -25,6 +25,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import campusLink from '~/helpers/generate-campus-link';
 
 export default {
   async asyncData({ store }) {
@@ -33,12 +34,13 @@ export default {
   computed: {
     ...mapGetters({
       campuses: 'context/accessibleCampuses',
+      driverStatus: 'status/current',
     }),
   },
   mounted() {
     if (this.campuses && this.campuses.length === 1) {
       const [campus] = this.campuses;
-      this.$router.push({ name: 'campus', params: { campus: campus.id } });
+      this.$router.push(campusLink(campus.id, this.driverStatus));
     }
   },
 };

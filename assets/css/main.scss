@@ -43,3 +43,24 @@ html, body, #__nuxt, #__layout {
   background: $background;
   height: 100%;
 }
+
+main.full-screen {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    svg.main-icon, div {
+      margin: 1em 0;
+    }
+    div {
+      width: 50%;
+    }
+    strong {
+      color: inherit;
+    }
+    button {
+      margin: 1em 0;
+    }
+}
