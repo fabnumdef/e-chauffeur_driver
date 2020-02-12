@@ -2,7 +2,7 @@
   <header :class="driving ? 'active' : ''">
     <aside>Destination</aside>
     <h1>{{ destination }}</h1>
-    <ec-button @click.native="switchStatus">
+    <ec-button @click.native="emitClick">
       {{ buttonContent }}
     </ec-button>
   </header>
@@ -31,12 +31,8 @@ export default {
     },
   },
   methods: {
-    switchStatus() {
-      if (this.isPending) {
-        this.$emit('startStep');
-      } else {
-        this.$emit('endStep');
-      }
+    emitClick() {
+      this.$emit('updateStep');
     },
   },
 };

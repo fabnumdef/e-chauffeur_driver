@@ -17,6 +17,10 @@ export const mutations = {
 
 export const getters = {
   hasCampus: (s) => s.campus !== null,
+  globalCampus(s, g, rs, rg) {
+    // eslint-disable-next-line no-unused-expressions
+    rg.campus;
+  },
   campus: (s) => s.campus,
   accessibleCampuses: (s) => s.accessibleCampuses,
 };

@@ -21,7 +21,7 @@
         fill="white"
       />
     </svg>
-    <div class="description">
+    <div class="half-screen">
       <p>
         Vous n'avez actuellement
         <strong>aucune course programmée.</strong>

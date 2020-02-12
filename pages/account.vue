@@ -1,12 +1,10 @@
 <template>
-  <section>
-    <div
-      class="notification is-primary"
-    >
-      <div class="container">
+  <main class="full-screen">
+    <header>
+      <h1>
         Modifier mon compte
-      </div>
-    </div>
+      </h1>
+    </header>
     <form
       class="container"
       @submit.prevent="update"
@@ -50,7 +48,7 @@
         Sauvegarder
       </button>
     </form>
-  </section>
+  </main>
 </template>
 
 <script>
@@ -86,22 +84,20 @@ export default {
   @import "~assets/css/head";
 
   header {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    .pretitle {
-      text-transform: uppercase;
-      color: $dark-gray;
-      font-weight: bold;
+    background-color: $primary;
+    width: 100%;
+    h1 {
+      color: $white;
+      font-size: 2em;
+      font-weight: 700;
+      margin: 1em;
     }
   }
-  .notification {
-    z-index: 1;
-    box-shadow: 0 10px 20px 0 rgba($black, 0.15);
-    color: $white;
-    font-size: $size-1;
-    line-height: $size-2;
-    padding-top: $size-3;
-    padding-bottom: $size-3;
-    font-weight: bold;
+  form {
+    width: 100%;
+    padding: 2em;
+    div {
+      width: 100%;
+    }
   }
 </style>

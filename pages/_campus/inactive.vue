@@ -17,7 +17,7 @@
         fill="#007AFF"
       />
     </svg>
-    <div class="description">
+    <div class="half-screen">
       <p>
         <strong>Vous avez au moins une étape enregistrée.</strong>
       </p>

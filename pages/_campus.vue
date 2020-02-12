@@ -31,16 +31,9 @@ export default {
     await store.dispatch('rides/fetchRides', campus);
     return { campus };
   },
-  mounted() {
-    if (this.hasSteps) {
-      this.$router.push(campusLink(this.campus, 'inactive'));
-    } else {
-      this.$router.push(campusLink(this.campus, 'break'));
-    }
-  },
   computed: {
     ...mapGetters({
-      hasSteps: 'rides/hasSteps',
+      steps: 'rides/steps',
       isReconnecting: 'isReconnecting',
     }),
   },
@@ -48,6 +41,18 @@ export default {
     async isReconnecting() {
       if (!this.isReconnecting) {
         await this.$store.dispatch('rides/fetchRides', this.campus);
+      }
+    },
+    steps() {
+      if (this.steps.length < 1) {
+        this.$router.push(campusLink(this.campus, 'break'));
+      }
+    },
+    mounted() {
+      if (this.steps.length > 0) {
+        this.$router.push(campusLink(this.campus, 'inactive'));
+      } else {
+        this.$router.push(campusLink(this.campus, 'break'));
       }
     },
   },

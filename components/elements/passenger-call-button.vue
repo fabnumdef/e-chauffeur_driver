@@ -13,12 +13,14 @@ import { mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapGetters({
-      steps: 'rides/getSteps',
+      steps: 'rides/steps',
     }),
     phone() {
-      // eslint-disable-next-line no-unused-vars
-      const [_, current] = this.steps;
-      return current.phone;
+      if (this.steps.length > 1) {
+        const [current] = this.steps;
+        return current.phone;
+      }
+      return null;
     },
   },
 };

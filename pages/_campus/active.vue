@@ -3,16 +3,29 @@
     <step-header
       :destination="currentStep.destination"
       :driving="driving"
-      @startStep="startStep(currentStep.id)"
-      @endStep="endStep(currentStep.id)"
+      @updateStep="updateSteps({ rideId: currentStep.id, campusId: campus.id, driverId })"
     />
     <section>
       <step-current
-        :date="currentStep.date"
         :previous="currentStep.previous"
         :destination="currentStep.destination"
-        :details="currentStep.details"
-      />
+      >
+        <template #header>
+          <h2>Etape en cours</h2>
+          <h2>{{ currentStep.date }}</h2>
+        </template>
+        <template #details>
+          <h2>Détails :</h2>
+          <ul>
+            <li
+              v-for="(detail, index) in currentStep.details"
+              :key="index"
+            >
+              {{ detail.key }} : <strong>{{ detail.value }}</strong>
+            </li>
+          </ul>
+        </template>
+      </step-current>
       <step-list
         :steps="remainingSteps"
       />
@@ -22,7 +35,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { DateTime } from 'luxon';
 import stepHeader from '~/components/step/header.vue';
 import stepCurrent from '~/components/step/current.vue';
 import stepList from '~/components/step/list.vue';
@@ -33,27 +45,27 @@ export default {
     stepCurrent,
     stepList,
   },
+  data() {
+    return {
+      driverId: this.$auth.user.id,
+    };
+  },
   computed: {
     ...mapGetters({
-      steps: 'rides/getSteps',
+      steps: 'rides/steps',
       driving: 'status/driving',
+      campus: 'context/campus',
     }),
     currentStep() {
-      const [previous, current] = this.steps;
-      return {
-        ...current,
-        date: DateTime.fromISO(current.date).toFormat("HH 'h' mm"),
-        previous: previous.destination,
-      };
+      return this.steps[0];
     },
     remainingSteps() {
-      return this.steps.slice(2);
+      return this.steps.slice(1);
     },
   },
   methods: {
     ...mapActions({
-      startStep: 'rides/startStep',
-      endStep: 'rides/endStep',
+      updateSteps: 'rides/updateSteps',
     }),
   },
 };

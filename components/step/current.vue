@@ -1,22 +1,13 @@
 <template>
   <article class="current-step">
     <header>
-      <h2>Etape en cours</h2>
-      <h2>{{ date }}</h2>
+      <slot name="header" />
     </header>
     <step-locations
       :departure="previous"
       :arrival="destination"
     />
-    <h2>Détails :</h2>
-    <ul>
-      <li
-        v-for="(detail, index) in details"
-        :key="index"
-      >
-        {{ detail.key }} : <strong>{{ detail.value }}</strong>
-      </li>
-    </ul>
+    <slot name="details" />
   </article>
 </template>
 
@@ -28,10 +19,6 @@ export default {
     stepLocations,
   },
   props: {
-    date: {
-      type: String,
-      required: true,
-    },
     previous: {
       type: String,
       required: true,
@@ -39,10 +26,6 @@ export default {
     destination: {
       type: String,
       required: true,
-    },
-    details: {
-      type: Array,
-      default: () => [],
     },
   },
 };
@@ -55,6 +38,7 @@ export default {
     header {
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
     }
     h2, li {
       font-size: 1.3em;
