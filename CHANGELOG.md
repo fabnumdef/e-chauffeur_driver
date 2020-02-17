@@ -1,6 +1,9 @@
 # Changelog
 ## Current
 ### Features
+### Fix
+## Version 1.4.5
+### Features
 * Export metrics for prometheus
 * Add automatically trim
 * Add socket connection event on campus selection
