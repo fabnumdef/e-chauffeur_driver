@@ -14,7 +14,7 @@
       >
         <input
           id="email"
-          v-model="user.email"
+          v-model.trim="user.email"
           required="required"
           class="input"
           type="email"

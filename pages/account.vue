@@ -27,7 +27,7 @@
       >
         <input
           id="email"
-          v-model="user.email"
+          v-model.trim="user.email"
           type="email"
           disabled
           class="input"
@@ -39,7 +39,7 @@
       >
         <input
           id="name"
-          v-model="user.name"
+          v-model.trim="user.name"
           type="text"
           class="input"
         >

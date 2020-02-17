@@ -2,6 +2,13 @@
 ## Current
 ### Features
 ### Fix
+## Version 1.4.5
+### Features
+* Export metrics for prometheus
+* Add automatically trim
+* Add socket connection event on campus selection
+### Fix
+* Fix container restart
 ## Version 1.4.4
 ### Features
 * Add new component to enforce password strength
