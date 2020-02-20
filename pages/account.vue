@@ -1,22 +1,10 @@
 <template>
-  <section>
-    <header class="container">
-      <div class="columns">
-        <p class="column">
-          <sidemenu-button />
-        </p>
-        <div class="column is-narrow pretitle">
-          Mon compte
-        </div>
-      </div>
-    </header>
-    <div
-      class="notification is-primary"
-    >
-      <div class="container">
+  <main class="full-screen">
+    <header>
+      <h1>
         Modifier mon compte
-      </div>
-    </div>
+      </h1>
+    </header>
     <form
       class="container"
       @submit.prevent="update"
@@ -53,18 +41,26 @@
           v-model="user.password"
         />
       </ec-field>
-      <button
-        type="submit"
-        class="button is-success"
-      >
-        Sauvegarder
-      </button>
+      <div class="button-wrapper">
+        <button
+          type="submit"
+          class="button is-success"
+        >
+          Sauvegarder
+        </button>
+        <button
+          type="button"
+          class="button is-danger"
+          @click="logout"
+        >
+          Se déconnecter
+        </button>
+      </div>
     </form>
-  </section>
+  </main>
 </template>
 
 <script>
-import sidemenuButton from '../components/sidemenu-button.vue';
 import ecField from '~/components/form/field.vue';
 import ecPassword from '~/components/form/password.vue';
 
@@ -72,7 +68,6 @@ const FIELDS = 'id,email,name';
 
 export default {
   components: {
-    sidemenuButton,
     ecField,
     ecPassword,
   },
@@ -90,6 +85,10 @@ export default {
         this.$toast.error('Une erreur est survenue, votre compte n\'a pas été mis à jour.');
       }
     },
+    logout() {
+      this.$auth.logout();
+      this.$router.redirect('/');
+    },
   },
 };
 </script>
@@ -98,22 +97,28 @@ export default {
   @import "~assets/css/head";
 
   header {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    .pretitle {
-      text-transform: uppercase;
-      color: $dark-gray;
-      font-weight: bold;
+    background-color: $primary;
+    width: 100%;
+    h1 {
+      color: $white;
+      font-size: 2em;
+      font-weight: 700;
+      margin: 1em;
     }
   }
-  .notification {
-    z-index: 1;
-    box-shadow: 0 10px 20px 0 rgba($black, 0.15);
-    color: $white;
-    font-size: $size-1;
-    line-height: $size-2;
-    padding-top: $size-3;
-    padding-bottom: $size-3;
-    font-weight: bold;
+  form {
+    width: 100%;
+    padding: 2em;
+    div {
+      width: 100%;
+    }
+  }
+  .button-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    button {
+      width: 150px;
+    }
   }
 </style>

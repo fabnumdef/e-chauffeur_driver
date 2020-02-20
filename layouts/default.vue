@@ -1,31 +1,22 @@
 <template>
   <div>
-    <sidemenu-menu />
     <nuxt />
+    <ec-nav />
   </div>
 </template>
+
 <script>
-import sidemenuMenu from '~/components/sidemenu-menu.vue';
+import ecNav from '~/components/nav.vue';
 
 export default {
   components: {
-    sidemenuMenu,
+    ecNav,
   },
 };
 </script>
 
-<style scoped lang="scss">
-  @import "~assets/css/head";
-
-  .is-menu {
-    padding-right: 0;
-    background: $blue-dark;
-    margin-bottom: -$size-small;
-  }
-  .columns {
+<style lang="scss" scoped>
+  div {
     height: 100%;
-  }
-  .is-map {
-    margin-bottom: -$size-small * 2;
   }
 </style>

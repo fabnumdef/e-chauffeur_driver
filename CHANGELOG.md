@@ -7,6 +7,8 @@
 * Export metrics for prometheus
 * Add automatically trim
 * Add socket connection event on campus selection
+* UI/UX for entire app refreshed
+* Added step workflow over ride management
 ### Fix
 * Fix container restart
 ## Version 1.4.4

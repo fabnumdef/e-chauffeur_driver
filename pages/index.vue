@@ -1,13 +1,8 @@
 <template>
-  <div class="container">
-    <div class="columns">
-      <p class="column">
-        <sidemenu-button />
-      </p>
-      <div class="column is-narrow pretitle">
-        Sélection du campus
-      </div>
-    </div>
+  <main>
+    <h1 class="column is-narrow pretitle">
+      Sélection du campus
+    </h1>
     <ul
       v-if="campuses"
       class="columns"
@@ -18,42 +13,39 @@
         class="column"
       >
         <nuxt-link
-          :to="{name: 'campus', params: { campus: campus.id }}"
+          :to="{name: `campus-${driverStatus}`, params: { campus: campus.id }}"
           class="box"
         >
           {{ campus.name }}
         </nuxt-link>
       </li>
     </ul>
-  </div>
+  </main>
 </template>
+
 <script>
 import { mapGetters } from 'vuex';
-import sidemenuButton from '~/components/sidemenu-button.vue';
+import campusLink from '~/helpers/generate-campus-link';
 
 export default {
-  components: {
-    sidemenuButton,
-  },
   async asyncData({ store }) {
     await store.dispatch('context/fetchAccessibleCampuses');
   },
   computed: {
     ...mapGetters({
       campuses: 'context/accessibleCampuses',
+      driverStatus: 'status/workStatus',
     }),
   },
   mounted() {
     if (this.campuses && this.campuses.length === 1) {
       const [campus] = this.campuses;
-      this.$router.push({ name: 'campus', params: { campus: campus.id } });
+      this.$router.push(campusLink(campus.id, this.driverStatus));
     }
   },
 };
 </script>
 
 <style lang="scss" scoped>
-  .container {
-    margin-top: 10px;
-  }
+
 </style>

@@ -24,7 +24,7 @@ module.exports = {
   },
 
   router: {
-    middleware: ['auth', 'menu'],
+    middleware: ['auth'],
   },
 
   css: [
@@ -76,6 +76,9 @@ module.exports = {
           'faSpinner',
           'faBars',
           'faCar',
+          'faChevronRight',
+          'faHistory',
+          'faUserCircle',
         ],
       },
     ],
