@@ -2,23 +2,20 @@
   <div>
     <reconnecting-hero :show="isReconnecting" />
     <nuxt-child />
-    <!--  Insert call buttons here conditionnally  -->
     <call-button />
-    <passenger-call-button />
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import reconnectingHero from '~/components/reconnecting-hero.vue';
 import callButton from '~/components/elements/call-button.vue';
-import passengerCallButton from '~/components/elements/passenger-call-button.vue';
 import campusLink from '~/helpers/generate-campus-link';
+import { statuses } from '~/store/status';
 
 export default {
   components: {
     reconnectingHero,
     callButton,
-    passengerCallButton,
   },
   async asyncData({
     params: { campus }, store, redirect,
@@ -27,13 +24,13 @@ export default {
       redirect('/');
     }
     await store.dispatch('context/setCampus', campus);
-    store.commit('status/setStatus');
     await store.dispatch('rides/fetchRides', campus);
     return { campus };
   },
   computed: {
     ...mapGetters({
       steps: 'rides/steps',
+      status: 'status/workStatus',
       isReconnecting: 'isReconnecting',
     }),
   },
@@ -45,16 +42,28 @@ export default {
     },
     steps() {
       if (this.steps.length < 1) {
-        this.$router.push(campusLink(this.campus, 'break'));
+        this.$router.push(campusLink(this.campus, statuses.BREAK));
+      } else if (this.steps.length > 0 && this.status === statuses.BREAK) {
+        this.$router.push(campusLink(this.campus, statuses.INACTIVE));
       }
     },
-    mounted() {
-      if (this.steps.length > 0) {
-        this.$router.push(campusLink(this.campus, 'inactive'));
+  },
+  mounted() {
+    if (this.steps.length > 0) {
+      if (this.status === statuses.ACTIVE) {
+        this.$router.push(campusLink(this.campus, statuses.ACTIVE));
       } else {
-        this.$router.push(campusLink(this.campus, 'break'));
+        this.$router.push(campusLink(this.campus, statuses.INACTIVE));
       }
-    },
+    } else {
+      this.$router.push(campusLink(this.campus, statuses.BREAK));
+      this.setStatus(statuses.BREAK);
+    }
+  },
+  methods: {
+    ...mapMutations({
+      setStatus: 'status/setWorkStatus',
+    }),
   },
 };
 </script>

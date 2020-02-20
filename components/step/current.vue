@@ -48,5 +48,6 @@ export default {
     li {
       font-weight: unset;
     }
+
   }
 </style>

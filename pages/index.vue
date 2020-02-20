@@ -34,7 +34,7 @@ export default {
   computed: {
     ...mapGetters({
       campuses: 'context/accessibleCampuses',
-      driverStatus: 'status/current',
+      driverStatus: 'status/workStatus',
     }),
   },
   mounted() {

@@ -10,6 +10,9 @@ export default function ({ app, store }) {
     ioInstance.on('reconnecting', () => {
       store.dispatch('reconnecting', true);
     });
+    ioInstance.on('deleteStep', (rideId) => {
+      store.dispatch('socket_deleteStep', rideId);
+    });
 
     const autoConnect = (isLogged) => {
       if (isLogged) {

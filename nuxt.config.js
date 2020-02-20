@@ -24,7 +24,7 @@ module.exports = {
   },
 
   router: {
-    middleware: ['auth', 'menu'],
+    middleware: ['auth'],
   },
 
   css: [

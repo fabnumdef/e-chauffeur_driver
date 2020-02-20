@@ -1,26 +1,28 @@
 // We've to disable param reassign, because it's the common behavior of vuex
 /* eslint-disable no-param-reassign */
+export const statuses = {
+  ACTIVE: 'active',
+  INACTIVE: 'inactive',
+  BREAK: 'break',
+};
+
 export const state = () => ({
-  current: 'inactive',
-  statusList: {
-    ACTIVE: 'active',
-    INACTIVE: 'inactive',
-    BREAK: 'break',
-  },
-  driving: false,
+  workStatus: statuses.INACTIVE,
+  statusList: statuses,
+  rideStatus: false,
 });
 
 export const mutations = {
-  setStatus: (s, status = s.statusList.INACTIVE) => {
-    s.current = status;
+  setWorkStatus: (s, status) => {
+    s.workStatus = status;
   },
-  toggleDriving: (s) => {
-    s.driving = !s.driving;
+  setRideStatus: (s) => {
+    s.rideStatus = !s.rideStatus;
   },
 };
 
 export const getters = {
-  current: (s) => s.current,
+  workStatus: (s) => s.workStatus,
   list: (s) => s.statusList,
-  driving: (s) => s.driving,
+  rideStatus: (s) => s.rideStatus,
 };

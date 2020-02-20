@@ -57,7 +57,7 @@ export default {
     const { data } = await this.$api.rides(
       this.campus.id,
       'id,start,end,departure(label),arrival(label)',
-    ).getDriverRides(this.$auth.user.id, DELIVERED);
+    ).getDriverRides(this.$auth.user.id, null, DELIVERED);
     this.rides = data.filter((ride) => (
       isToday(DateTime.fromISO(ride.start).toJSDate())
       && DateTime.fromISO(ride.end).toJSDate() < new Date()

@@ -1,9 +1,9 @@
 <template>
-  <header :class="driving ? 'active' : ''">
+  <header :class="rideStatus ? 'active' : ''">
     <aside>Destination</aside>
     <h1>{{ destination }}</h1>
     <ec-button @click.native="emitClick">
-      {{ buttonContent }}
+      {{ rideStatus ? 'Etape terminée' : "Commencer l'étape" }}
     </ec-button>
   </header>
 </template>
@@ -20,14 +20,9 @@ export default {
       type: String,
       required: true,
     },
-    driving: {
+    rideStatus: {
       type: Boolean,
-      default: false,
-    },
-  },
-  computed: {
-    buttonContent() {
-      return this.driving ? 'Etape terminée' : "Commencer l'étape";
+      required: true,
     },
   },
   methods: {

@@ -41,12 +41,21 @@
           v-model="user.password"
         />
       </ec-field>
-      <button
-        type="submit"
-        class="button is-success"
-      >
-        Sauvegarder
-      </button>
+      <div class="button-wrapper">
+        <button
+          type="submit"
+          class="button is-success"
+        >
+          Sauvegarder
+        </button>
+        <button
+          type="button"
+          class="button is-danger"
+          @click="logout"
+        >
+          Se déconnecter
+        </button>
+      </div>
     </form>
   </main>
 </template>
@@ -76,6 +85,10 @@ export default {
         this.$toast.error('Une erreur est survenue, votre compte n\'a pas été mis à jour.');
       }
     },
+    logout() {
+      this.$auth.logout();
+      this.$router.redirect('/');
+    },
   },
 };
 </script>
@@ -98,6 +111,14 @@ export default {
     padding: 2em;
     div {
       width: 100%;
+    }
+  }
+  .button-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    button {
+      width: 150px;
     }
   }
 </style>

@@ -3,9 +3,14 @@
 import {
   VALIDATED, STARTED, IN_PROGRESS, WAITING, DELIVERED,
 } from '@fabnumdef/e-chauffeur_lib-vue/api/status/states';
-import { DateTime } from 'luxon';
-import generateSteps, { generateStep, mutateStep } from '../helpers/steps-converter';
+import getAction from '../helpers/mutate-step';
 import { sortByDate } from '../helpers/date-helpers';
+
+export const state = () => ({
+  steps: [],
+  previous: 'Position actuelle',
+  alert: false,
+});
 
 const statesToTrack = [
   VALIDATED,
@@ -14,93 +19,82 @@ const statesToTrack = [
   WAITING,
 ];
 
-export const state = () => ({
-  rides: [],
-  steps: [],
-  previous: 'Position actuelle',
-});
-
 export const mutations = {
-  setRides: (s, rides = null) => {
-    s.rides = rides
+  setSteps: (s, steps = []) => {
+    s.steps = steps
       .filter(({ id }) => !!id);
   },
-  setSteps: (s, rides = []) => {
-    s.steps = generateSteps(rides);
+  toggleAlert: (s) => {
+    s.alert = !s.alert;
   },
-  pushRide: (s, { ride, loggedUser }) => {
-    if (!ride.id) {
-      throw new Error('Id is required');
-    }
-    const i = s.rides.findIndex(({ id }) => id === ride.id);
-    const isToTrack = statesToTrack.includes(ride.status) && loggedUser.id === ride.driver.id;
-    if (i === -1) {
-      if (isToTrack) {
-        const steps = generateStep(ride);
-        s.rides.push(ride);
-        s.steps.push(...steps);
-        sortByDate(s.rides);
-        sortByDate(s.steps);
-      }
-    } else {
-      Object.assign(s.rides[i], ride);
-      if (ride.status === WAITING || ride.status === IN_PROGRESS) {
-        s.steps = s.steps.filter((step) => {
-          const toKeep = step.id !== ride.id || step.type !== 'departure';
-          if (!toKeep) {
-            s.previous = step.destination;
-          }
-          return toKeep;
-        });
-      } else if (ride.status === DELIVERED) {
-        s.steps = s.steps.filter((step) => {
-          const toKeep = step.id !== ride.id;
-          if (!toKeep && step.type === 'arrival') {
-            s.previous = step.destination;
-          }
-          return toKeep;
-        });
-      } else if (ride.status !== STARTED) {
-        s.steps = s.steps.filter((step) => step.id !== ride.id);
-      }
-    }
+  setPrevious: (s, previous) => {
+    s.previous = previous;
   },
 };
 
 export const getters = {
-  rides: ({ rides }) => rides,
+  rawSteps: (s) => s.steps,
   steps: (s) => s.steps.map((step) => ({
     ...step,
-    date: DateTime.fromISO(step.date).toFormat("HH 'h' mm"),
     previous: s.previous,
   })),
+  alert: (s) => s.alert,
 };
 
 export const actions = {
-  async fetchRides({ dispatch }, campus) {
+  async fetchRides({ commit }, campus) {
     try {
       const { data } = await this.$api.rides(
         campus,
-        'id,start,end,phone,departure(label),arrival(label),'
-        + 'passengersCount,car(id,label,model(label)),status,comments,luggage',
-      ).getDriverRides(this.$auth.user.id, ...statesToTrack);
-      dispatch('setState', data);
+        'id,destination,phone,details(*),type,date,status,rideId,passengersCount',
+      ).getDriverRides(this.$auth.user.id, 'steps', ...statesToTrack);
+      commit('setSteps', data);
     } catch (e) {
       throw new Error('Rides fetching failed');
     }
   },
-  setState({ commit }, rides) {
-    commit('setRides', rides);
-    commit('setSteps', rides);
-  },
-  async updateSteps({ commit, getters: g }, { rideId, driverId, campusId }) {
-    commit('status/toggleDriving', null, { root: true });
-
+  async updateSteps({ commit, getters: g }, { step, campusId }) {
     try {
-      const { ride, status } = mutateStep(g.rides, rideId);
-      return this.$api.rides(campusId, driverId, 'id').mutateRide(ride, status);
+      await this.$api.rides(campusId, 'id').mutateRide(step, getAction(step.status), 'step');
+      commit('status/setRideStatus', null, { root: true });
+      if (g.alert) {
+        commit('toggleAlert');
+      }
     } catch (e) {
       throw new Error('Ride mutation failed');
     }
+  },
+  deleteStep: ({ commit, getters: g }, rideId) => {
+    const updatedSteps = JSON.parse(JSON.stringify(g.rawSteps))
+      .filter((step) => {
+        const updatedRideId = step.rideId.filter((id) => rideId !== id);
+        return updatedRideId.length > 0 ? { ...step, rideId: updatedRideId } : false;
+      });
+    commit('setSteps', updatedSteps);
+  },
+  pushStep: ({ commit, getters: g }, payload) => {
+    payload.forEach((step) => {
+      const steps = JSON.parse(JSON.stringify(g.rawSteps));
+      const { status, id } = step;
+      if (!id) {
+        throw new Error('Id is required');
+      }
+      const index = steps.findIndex((st) => st.id === id);
+      if (index === -1) {
+        if (status === VALIDATED || status === WAITING) {
+          steps.push(step);
+          if (steps.length > 0 && step.date < steps[0].date) {
+            commit('toggleAlert');
+          }
+        }
+      } else if (status === DELIVERED || status === WAITING) {
+        steps.splice(index, 1);
+        commit('setPrevious', step.destination);
+      } else {
+        steps[index].status = status;
+      }
+      sortByDate(steps);
+      commit('setSteps', steps);
+    });
   },
 };

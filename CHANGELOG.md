@@ -3,6 +3,8 @@
 ### Features
 * Export metrics for prometheus
 * Add automatically trim
+* UI/UX for entire app refreshed
+* Added step workflow over ride management
 ### Fix
 ## Version 1.4.4
 ### Features
