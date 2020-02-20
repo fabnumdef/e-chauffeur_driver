@@ -33,7 +33,7 @@ module.exports = {
   ],
 
   plugins: [
-    { src: '~/plugins/swiper.js', ssr: false },
+    { src: '~/plugins/swiper.js', mode: 'client' },
   ],
 
   modules: [
