@@ -2,6 +2,7 @@
 ## Current
 ### Features
 ### Fix
+* Fix socket connexion
 ## Version 1.4.5
 ### Features
 * Export metrics for prometheus
