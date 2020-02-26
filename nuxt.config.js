@@ -55,6 +55,7 @@ module.exports = {
           { src: 'user-expiration', mode: 'client' },
         ],
         prometheus: {
+          port: process.env.PROMETHEUS_EXPORTER || 9091,
           host: '0.0.0.0',
         },
       },
