@@ -3,15 +3,75 @@ stages:
   - build
   - deploy
 
+include:
+  - template: Dependency-Scanning.gitlab-ci.yml
+  - template: License-Management.gitlab-ci.yml
+
 variables:
-  URL_REVIEW: ${CI_COMMIT_REF_SLUG}.${STAGING_DOMAIN}
+  DS_DISABLE_DIND: "true"
   KUBECONFIG: /etc/deploy/config
 
-lint:
-  image: node:latest
-  stage: test
+.deploy:
+  stage: deploy
+  image: dtzar/helm-kubectl:3.1.1
+  variables:
+    KUBECONFIG: /etc/deploy/config
+    K8S_CLUSTER_NAME: current
+    ALERT_ENABLED: "true"
+    REPLICA_COUNT: 1
+    INGRESS_ISSUER: self-signing
+    ALERT_MIN_POD: 1
+  before_script:
+    - mkdir -p `dirname $KUBECONFIG`
+    - echo ${STAGING_KUBECONFIG} | base64 -d > $KUBECONFIG
   script:
-    - npm i
+    - helm upgrade
+      --install
+      --namespace e-chauffeur
+      --set replicaCount=${REPLICA_COUNT}
+      --set image.tag="${CI_COMMIT_REF_SLUG}"
+      --set ingress.host="${DEPLOYMENT_HOST}"
+      --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
+      --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
+      --set imageCredentials.registry="${CI_REGISTRY}"
+      --set env.API_URL="${API_URL}"
+      --set env.VERSION="Version ${CI_COMMIT_REF_NAME} - ${CI_COMMIT_SHA} (job \#${CI_JOB_ID})"
+      --set env.VAPID_PUBLIC_KEY="${VAPID_PUBLIC_KEY}"
+      --set monitoring.alert.enabled="${ALERT_ENABLED}"
+      --set ingress.issuer="${INGRESS_ISSUER}"
+      --set monitoring.alert.minimumPod=${ALERT_MIN_POD}
+      --wait
+      ${HELM_NAME}
+      .helm-chart
+
+.node:
+  image: node:alpine
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+  before_script:
+    - npm install
+
+retire-js-dependency_scanning:
+  only:
+    changes:
+      - package-lock.json
+
+gemnasium-dependency_scanning:
+  only:
+    changes:
+      - package-lock.json
+
+license_management:
+  only:
+    changes:
+      - package-lock.json
+
+lint:
+  stage: test
+  extends: .node
+  script:
     - npm run lint
 
 build:
@@ -27,26 +87,13 @@ build:
       --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
 
 deploy_review:
-  stage: deploy
-  image: dtzar/helm-kubectl:3.0.2
-  before_script:
-    - mkdir -p `dirname $KUBECONFIG`
-    - echo ${STAGING_KUBECONFIG} | base64 -d > $KUBECONFIG
-  script:
-    - helm upgrade
-      --install
-      --namespace e-chauffeur
-      --set image.tag="${CI_COMMIT_REF_SLUG}"
-      --set ingress.host="${URL_REVIEW}"
-      --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
-      --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
-      --set imageCredentials.registry="${CI_REGISTRY}"
-      --set env.API_URL="${STAGING_API_URL}"
-      --set env.VAPID_PUBLIC_KEY="${STAGING_VAPID_PUBLIC_KEY}"
-      --set monitoring.alert.enabled="false"
-      --wait
-      driver-${CI_COMMIT_REF_SLUG}
-      .helm-chart
+  extends: .deploy
+  variables:
+    DEPLOYMENT_HOST: ${CI_COMMIT_REF_SLUG}.${STAGING_DOMAIN}
+    API_URL: ${STAGING_API_URL}
+    ALERT_ENABLED: "false"
+    HELM_NAME: driver-${CI_COMMIT_REF_SLUG}
+    VAPID_PUBLIC_KEY: ${STAGING_VAPID_PUBLIC_KEY}
   except:
     refs:
       - tags
@@ -54,28 +101,15 @@ deploy_review:
       - develop
 
 deploy_staging:
-  stage: deploy
-  image: dtzar/helm-kubectl:3.0.2
-  before_script:
-    - mkdir -p `dirname $KUBECONFIG`
-    - echo ${STAGING_KUBECONFIG} | base64 -d > $KUBECONFIG
-  script:
-    - helm upgrade
-      --install
-      --namespace e-chauffeur
-      --set replicaCount=3
-      --set image.tag="${CI_COMMIT_REF_SLUG}"
-      --set ingress.host="${STAGING_DOMAIN}"
-      --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
-      --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
-      --set imageCredentials.registry="${CI_REGISTRY}"
-      --set env.API_URL="${STAGING_API_URL}"
-      --set env.VAPID_PUBLIC_KEY="${STAGING_VAPID_PUBLIC_KEY}"
-      --set ingress.issuer="letsencrypt-prod"
-      --set monitoring.alert.minimumPod=2
-      --wait
-      driver-staging
-      .helm-chart
+  extends: .deploy
+  variables:
+    DEPLOYMENT_HOST: ${STAGING_DOMAIN}
+    API_URL: ${STAGING_API_URL}
+    HELM_NAME: driver-staging
+    REPLICA_COUNT: 3
+    INGRESS_ISSUER: letsencrypt-prod
+    ALERT_MIN_POD: 2
+    VAPID_PUBLIC_KEY: ${STAGING_VAPID_PUBLIC_KEY}
   only:
     refs:
       - develop
@@ -84,28 +118,15 @@ deploy_staging:
       - tags
 
 deploy_prod:
-  stage: deploy
-  image: dtzar/helm-kubectl:3.0.2
-  before_script:
-    - mkdir -p `dirname $KUBECONFIG`
-    - echo ${PRODUCTION_KUBECONFIG} | base64 -d > $KUBECONFIG
-  script:
-    - helm upgrade
-      --install
-      --namespace e-chauffeur
-      --set replicaCount=3
-      --set image.tag="${CI_COMMIT_REF_SLUG}"
-      --set ingress.host="${PRODUCTION_DOMAIN}"
-      --set imageCredentials.username="${DOCKER_REGISTRY_USER}"
-      --set imageCredentials.password="${DOCKER_REGISTRY_PASSWORD}"
-      --set imageCredentials.registry="${CI_REGISTRY}"
-      --set env.API_URL="${PRODUCTION_API_URL}"
-      --set env.VAPID_PUBLIC_KEY="${PRODUCTION_VAPID_PUBLIC_KEY}"
-      --set ingress.issuer="letsencrypt-prod"
-      --set monitoring.alert.minimumPod=3
-      --wait
-      driver
-      .helm-chart
+  extends: .deploy
+  variables:
+    DEPLOYMENT_HOST: ${PRODUCTION_DOMAIN}
+    API_URL: ${PRODUCTION_API_URL}
+    HELM_NAME: driver
+    REPLICA_COUNT: 3
+    INGRESS_ISSUER: letsencrypt-prod
+    ALERT_MIN_POD: 3
+    VAPID_PUBLIC_KEY: ${PRODUCTION_VAPID_PUBLIC_KEY}
   only:
     refs:
       - tags

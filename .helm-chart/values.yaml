@@ -27,6 +27,7 @@ nameOverride: ""
 fullnameOverride: ""
 env:
   API_URL: api.localhost
+  VERSION: null
   VAPID_PUBLIC_KEY: vapid.localhost
 imageCredentials:
   name: e-chauffeur-driver
