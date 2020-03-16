@@ -4,6 +4,7 @@
 ### Fix
 * Fix socket connexion
 * Driver cant accept ride in the past anymore
+* Fix kaniko-project version in CI
 ## Version 1.4.5
 ### Features
 * Export metrics for prometheus
