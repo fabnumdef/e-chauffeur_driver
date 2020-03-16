@@ -3,6 +3,7 @@
 ### Features
 ### Fix
 * Fix socket connexion
+* Driver cant accept ride in the past anymore
 ## Version 1.4.5
 ### Features
 * Export metrics for prometheus
