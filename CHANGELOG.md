@@ -3,6 +3,7 @@
 ### Features
 ### Fix
 * Fix socket connexion
+* Fix kaniko-project version in CI
 ## Version 1.4.5
 ### Features
 * Export metrics for prometheus
