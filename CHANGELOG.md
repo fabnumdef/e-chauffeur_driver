@@ -2,6 +2,9 @@
 ## Current
 ### Features
 ### Fix
+## Version 1.4.6
+### Features
+### Fix
 * Fix socket connexion
 * Driver cant accept ride in the past anymore
 * Fix kaniko-project version in CI
