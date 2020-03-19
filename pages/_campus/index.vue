@@ -112,12 +112,16 @@ export default {
       this.slideChange();
     },
   },
+  sockets: {
+    connect() {
+      this.$io.emit('driverConnected', {
+        driverId: this.$auth.user.id,
+        campusId: this.campus,
+      });
+    },
+  },
   mounted() {
     this.slideChange();
-    this.$socket.emit('driverConnected', {
-      driverId: this.$auth.user.id,
-      campusId: this.campus,
-    });
   },
   methods: {
     isToday(date) {
