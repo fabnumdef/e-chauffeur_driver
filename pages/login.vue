@@ -48,11 +48,13 @@
 
 <script>
 import ecField from '~/components/form/field.vue';
+import ecButton from '~/components/ec-button.vue';
 
 export default {
   layout: 'not-logged',
   components: {
     ecField,
+    ecButton,
   },
   async asyncData() {
     return {
