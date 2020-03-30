@@ -24,7 +24,7 @@ export const getters = {
 export const actions = {
   async setCampus({ commit }, campus) {
     try {
-      const { data } = await this.$api.campuses.getCampus(campus, 'id,name,phone(drivers)');
+      const { data } = await this.$api.query('campuses').setMask('id,name,phone(drivers)').get(campus);
       commit('setCampus', data);
     } catch (e) {
       throw new Error('Base non trouvée');
@@ -33,7 +33,7 @@ export const actions = {
 
   async fetchAccessibleCampuses({ commit, getters: g }) {
     if (!g.accessibleCampuses) {
-      const { data: campuses } = await this.$api.jwt.getCampuses('id,name');
+      const { data: campuses } = await this.$api.query('jwt').setMask('id,name').accessibleCampuses();
       commit('setAccessibleCampuses', campuses);
     }
     return g.accessibleCampuses;

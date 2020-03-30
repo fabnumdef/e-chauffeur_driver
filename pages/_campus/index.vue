@@ -132,7 +132,7 @@ export default {
       && today.getDate() === target.getDate();
     },
     async changeStatus(ride, status) {
-      return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride, status);
+      return this.$api.query('rides').setMask('id').mutate(ride.id, status);
     },
     slideChange() {
       this.$store.dispatch('rides/selectRide', this.ridesSwipe.activeIndex);

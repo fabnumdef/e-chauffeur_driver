@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     updateRide(ride, transition) {
-      return this.$api.rides(this.campus, this.$auth.user.id, 'id').mutateRide(ride, transition);
+      return this.$api.query('rides').setMask('id').mutate(ride.id, transition);
     },
   },
 };
