@@ -2,6 +2,7 @@
 ## Current
 ### Features
 ### Fix
+* Rides to accept date interval set to current day
 ## Version 1.4.6
 ### Features
 ### Fix
