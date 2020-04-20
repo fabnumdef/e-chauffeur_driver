@@ -40,16 +40,12 @@ module.exports = {
     [
       '@fabnumdef/e-chauffeur_lib-vue',
       {
-        components: {
-          ecButton: 'atoms/button.vue',
-        },
         api: {
           jwt: 'jwt',
           rides: 'rides',
           campuses: 'campuses',
           users: 'users',
         },
-        withAuth: true,
         authPlugins: [
           { src: 'auth-renew', mode: 'client' },
           { src: 'user-expiration', mode: 'client' },
