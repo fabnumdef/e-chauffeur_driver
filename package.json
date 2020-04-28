@@ -10,10 +10,10 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@fabnumdef/e-chauffeur_lib-vue": "0.1.0-alpha.3",
+    "@fabnumdef/e-chauffeur_lib-vue": "0.1.0-rc.1",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
-    "node-sass": "^4.13.1",
-    "nuxt": "^2.12.1",
+    "node-sass": "^4.14.0",
+    "nuxt": "^2.12.2",
     "sass-loader": "^8.0.2",
     "vue-awesome-swiper": "^3.1.3"
   },
