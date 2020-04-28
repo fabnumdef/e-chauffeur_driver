@@ -24,8 +24,8 @@ export default async function ({ app }) {
     return permission !== 'denied';
   };
 
-  const handleSubscription = async (subscription) => app.$api.users.subscribeDevice(app.$auth.user.id,
-    subscription);
+  const handleSubscription = async (subscription) => app.$api.query('users')
+    .subscribeDevice(app.$auth.user.id, subscription);
 
   const checkSubscription = async (registration) => {
     let subscription = await registration.pushManager.getSubscription();

@@ -77,13 +77,13 @@ export default {
     ecPassword,
   },
   async asyncData({ $api }) {
-    const { data: user } = await $api.jwt.getUser(FIELDS);
+    const { data: user } = await $api.query('jwt').setMask(FIELDS).user();
     return { user };
   },
   methods: {
     async update() {
       try {
-        const { data: user } = await this.$api.users.patchUser(this.user.id, this.user, FIELDS);
+        const { data: user } = await this.$api.query('users').setMask(FIELDS).edit(this.user.id, this.user);
         this.user = user;
         this.$toast.success('Votre compte utilisateur a bien été mis à jour.');
       } catch (e) {

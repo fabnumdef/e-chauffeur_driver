@@ -71,10 +71,12 @@ export const getters = {
 export const actions = {
   async fetchRides({ commit }, campus) {
     try {
-      const { data } = await this.$api.rides(
-        campus,
-        'id,start,end,phone,departure(label),arrival(label),passengersCount,car(id,label,model(label)),status,comments',
-      ).getDriverRides(this.$auth.user.id, ...statesToTrack);
+      const { data } = await this.$api.query('rides')
+        .setCampus(campus)
+        .setMask(['id,start,end,phone,departure(label),arrival(label)',
+          'passengersCount,car(id,label,model(label)),status,comments'])
+        .getDriverRides(this.$auth.user.id)
+        .setFilter('status', statesToTrack);
       commit('setRides', data);
     } catch (e) {
       throw new Error('Rides fetching failed');

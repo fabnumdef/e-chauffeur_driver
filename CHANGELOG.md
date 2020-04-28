@@ -1,6 +1,7 @@
 # Changelog
 ## Current
 ### Features
+* migration to lib-vue 0.1.0.alpha
 ### Fix
 * Rides to accept date interval set to current day
 ## Version 1.4.6
